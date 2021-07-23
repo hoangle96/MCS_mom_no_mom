@@ -1,0 +1,11 @@
+onset,offset,toy,bricks_ord,pig_ord,popuppals_ord,xylophone_ord,shape_sorter_ord,shape_sorter_blocks_ord,broom_ord,clear_ball_ord,balls_ord,food_ord,grocery_cart_ord,stroller_ord,bucket_ord
+272884.0,279072,no_ops,,,,,,,,,,,,,
+279072.0,310454,['popuppals'],,,1.0,,,,,,,,,,
+310454.0,321674,no_ops,,,,,,,,,,,,,
+321674.0,521968,['xylophone'],,,,1.0,,,,,,,,,
+521968.0,533188,no_ops,,,,,,,,,,,,,
+533188.0,550256,['popuppals'],,,2.0,,,,,,,,,,
+550256.0,570860,no_ops,,,,,,,,,,,,,
+570860.0,637738,['xylophone'],,,,2.0,,,,,,,,,
+637738.0,644776,no_ops,,,,,,,,,,,,,
+644776.0,778940,['bricks'],1.0,,,,,,,,,,,,

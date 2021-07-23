@@ -1,0 +1,18 @@
+index,onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy,contain,g
+0,1900940,1908148,,,,,,,,,,,1.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,1
+3,1908148,1912330,,,,,,,,,,,,,,no_ops,0,2
+4,1912330,1945514,,,,,,,,,,,2.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,3
+15,1945514,1952416,,,,,,,,,,,,,,no_ops,0,4
+16,1952416,2019124,,,,,,,,,,,5.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,5
+31,2019124,2029562,,,,,,,,,,,,,,no_ops,0,6
+32,2029562,2102186,,,,,,,,,,,9.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,7
+46,2102186,2109224,,,,,,,,,,,,,,no_ops,0,8
+47,2109224,2163794,,,,,,,,,,20.0,,,,"['shape_sorter_blocks', 'shape_sorter']",1,9
+59,2163794,2167432,,,,,,,,,,,,,,no_ops,0,10
+60,2167432,2210986,,,,,,,,,,24.0,,,,"['shape_sorter_blocks', 'shape_sorter']",1,11
+67,2210986,2214964,,,,,,,,,,,,,,no_ops,0,12
+68,2214964,2220064,,,,,,,,,,27.0,,,,"['shape_sorter_blocks', 'shape_sorter']",1,13
+73,2220064,2224926,,,,,,,,,,,,,,no_ops,0,14
+74,2224926,2257838,,,,,,,,,,29.0,,,,"['shape_sorter_blocks', 'shape_sorter']",1,15
+78,2257838,2260864,,,,,,,,,,,,,,no_ops,0,16
+79,2260864,2391498,,,,,,,,,,31.0,,,,"['shape_sorter_blocks', 'shape_sorter']",1,17

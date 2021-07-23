@@ -1,0 +1,16 @@
+onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy
+2099568,2200174,,,,,,,,,1.0,,,,,['popuppals']
+2200174,2205546,,,,,,,,,,,,,,no_ops
+2205546,2240396,,,,,,,,,4.0,,,,,['popuppals']
+2240396,2247196,,,,,,,,,,,,,,no_ops
+2247196,2383740,,,,,,,,,9.0,,,,,['popuppals']
+2383740,2388874,,,,,,,,,,,,,,no_ops
+2388874,2395572,,,,,,,,,12.0,,,,,['popuppals']
+2395572,2399516,,,,,,,,,,,,,,no_ops
+2399516,2418828,,,,,,,,,13.0,,,,,['popuppals']
+2418828,2422942,,,,,,,,,,,,,,no_ops
+2422942,2459424,,,,,,,,,19.0,,,,,['popuppals']
+2459424,2465646,,,,,,,,,,,,,,no_ops
+2465646,2580328,,,,,,,,,22.0,,,,,['popuppals']
+2580328,2590902,,,,,,,,,,,,,,no_ops
+2590902,2595832,31.0,,,,,,,,,,,,,['bricks']

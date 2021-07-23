@@ -1,0 +1,29 @@
+index,onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy,contain,g
+0,1777350,1778166,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,1
+1,1778166,1830526,,,,,,,,,4.0,,4.0,,,"['popuppals', 'shape_sorter_blocks']",0,2
+2,1830526,1848886,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,3
+3,1848886,1852524,,,,,,,,,,,4.0,,5.0,"['xylophone', 'shape_sorter_blocks']",0,4
+4,1852524,1854768,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,5
+5,1854768,1862078,,,,,,,,,,,4.0,,6.0,"['xylophone', 'shape_sorter_blocks']",0,6
+6,1862078,1863812,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,7
+7,1863812,1866566,,,,,,,,,,,4.0,,7.0,"['xylophone', 'shape_sorter_blocks']",0,8
+8,1866566,1868470,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,9
+9,1868470,1871700,,,,,,,,,,,4.0,,8.0,"['xylophone', 'shape_sorter_blocks']",0,10
+10,1871700,1875066,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,11
+11,1875066,1887646,,,,,,,,,,,4.0,,9.0,"['xylophone', 'shape_sorter_blocks']",0,12
+12,1887646,1893494,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,13
+13,1893494,1895330,,,,,,,,,,,4.0,,10.0,"['xylophone', 'shape_sorter_blocks']",0,14
+14,1895330,1897132,,,,,,,,,,,4.0,,,['shape_sorter_blocks'],1,15
+15,1897132,1897812,,,,,,,,,,,4.0,,11.0,"['xylophone', 'shape_sorter_blocks']",0,16
+16,1897812,1941774,,,,,,,,,,,4.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,17
+24,1941774,1956020,,,,,,,,,5.0,,8.0,,,"['popuppals', 'shape_sorter_blocks']",0,18
+25,1956020,1959692,,,,,,,,,,,8.0,,,['shape_sorter_blocks'],1,19
+26,1960950,2028508,,,,,,,,,6.0,,,,,['popuppals'],0,20
+27,2028508,2066044,,,,,,,,,,,,,,no_ops,0,20
+28,2066044,2079168,,,,,,,,,7.0,,,,,['popuppals'],0,20
+29,2079168,2091000,,,,,,,,,,,,,,no_ops,0,20
+30,2091000,2102594,,,,,,,,,,11.0,,,,['shape_sorter'],1,21
+31,2102594,2109768,,,,,,,,,,,,,,no_ops,0,22
+32,2109768,2151894,,,,,,,,,,,9.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,23
+38,2151894,2167534,,,,,,,,,,,,,,no_ops,0,24
+39,2167534,2268684,,,,,,,,,,,,,12.0,['xylophone'],0,24

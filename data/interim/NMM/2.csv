@@ -1,0 +1,9 @@
+index,onset,offset,toy,bricks_ord,pig_ord,popuppals_ord,xylophone_ord,shape_sorter_ord,shape_sorter_blocks_ord,broom_ord,clear_ball_ord,balls_ord,food_ord,grocery_cart_ord,stroller_ord,bucket_ord,contain,g
+0,460462.0,706520,no_ops,,,,,,,,,,,,,,0,1
+1,706520.0,712640,['grocery_cart'],,,,,,,,,,,1.0,,,1,2
+2,712640.0,717400,no_ops,,,,,,,,,,,,,,0,3
+3,717400.0,766292,"['food', 'grocery_cart']",,,,,,,,,,,2.0,,,1,4
+12,766292.0,772684,no_ops,,,,,,,,,,,,,,0,5
+13,772684.0,857786,"['food', 'grocery_cart']",,,,,,,,,,,6.0,,,1,6
+25,857786.0,898246,no_ops,,,,,,,,,,,,,,0,7
+26,898246.0,954142,"['food', 'grocery_cart']",,,,,,,,,,,10.0,,,1,8

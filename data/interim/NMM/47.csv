@@ -1,0 +1,5 @@
+onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy
+2161856,2173892.0,,,,,9.0,,,,,,,,,['clear_ball']
+2173892,2179434.0,,,,,,,,,,,,,,no_ops
+2179434,2182154.0,,,,,10.0,,,,,,,,,['clear_ball']
+2182154,2414476.0,,,,,,,,,,,,,,no_ops

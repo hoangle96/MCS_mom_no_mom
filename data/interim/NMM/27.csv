@@ -1,0 +1,8 @@
+level_0,index,onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy,contain,g
+0,0,1973564.0,2036090.0,,8.0,,,,,,,,,,,,"['bucket', 'balls']",1,1
+9,9,2036090.0,2446572.0,,,,,,,,,,,,,,no_ops,0,2
+0,0,1973564.0,2036090.0,,8.0,,,,,,,,,,,,"['bucket', 'balls']",1,1
+9,9,2036090.0,2446572.0,,,,,,,,,,,,,,no_ops,0,2
+0,0,2478974.0,2488460.0,,,,,,,,,,,,,,no_ops,0,1
+1,1,2488460.0,2503862.0,,,21.0,,,,,,,,,,,"['bucket', 'balls']",1,2
+5,5,2503862.0,2515592.0,,,,,,,,,,,,,,no_ops,0,3

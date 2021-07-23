@@ -1,0 +1,182 @@
+onset,offset,pred,toys
+1768612.0,1783612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1783612.0,1798612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1798612.0,1813612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1813612.0,1828612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1828612.0,1843612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1843612.0,1858612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1858612.0,1873612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1873612.0,1888612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1888612.0,1903612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1903612.0,1918612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1918612.0,1933612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1933612.0,1948612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1948612.0,1963612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1963612.0,1978612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1978612.0,1993612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1993612.0,2008612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2008612.0,2023612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2023612.0,2038612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2038612.0,2053612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2053612.0,2068612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2068612.0,2083612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2083612.0,2098612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2098612.0,2113612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2113612.0,2128612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2128612.0,2143612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2143612.0,2158612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2158612.0,2173612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2173612.0,2188612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2188612.0,2203612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2203612.0,2218612.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2218612.0,2222648.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+2222648.0,2226830.0,2,[]
+2226830.0,2233612.0,2,['shape_sorter']
+2233612.0,2248612.0,2,['shape_sorter']
+2248612.0,2254234.0,2,['shape_sorter']
+2254234.0,2258280.0,2,[]
+2258280.0,2263612.0,2,['shape_sorter_blocks']
+2263612.0,2264774.0,2,['shape_sorter_blocks']
+2321690.0,2336690.0,2,"['balls', 'bucket']"
+2336690.0,2351690.0,2,"['balls', 'bucket']"
+2351690.0,2366690.0,2,"['balls', 'bucket']"
+2366690.0,2381690.0,2,"['balls', 'bucket']"
+2381690.0,2396690.0,2,"['balls', 'bucket']"
+2396690.0,2411690.0,2,"['balls', 'bucket']"
+2411690.0,2426690.0,2,"['balls', 'bucket']"
+2426690.0,2441690.0,2,"['balls', 'bucket']"
+2441690.0,2456690.0,2,"['balls', 'bucket']"
+2456690.0,2471690.0,2,"['balls', 'bucket']"
+2471690.0,2486690.0,2,"['balls', 'bucket']"
+2486690.0,2501690.0,2,"['balls', 'bucket']"
+2501690.0,2516690.0,2,"['balls', 'bucket']"
+2516690.0,2531690.0,2,"['balls', 'bucket']"
+2531690.0,2546690.0,2,"['balls', 'bucket']"
+2546690.0,2561690.0,2,"['balls', 'bucket']"
+2561690.0,2576690.0,2,"['balls', 'bucket']"
+2576690.0,2591690.0,3,"['balls', 'bucket']"
+2591690.0,2606690.0,3,"['balls', 'bucket']"
+2606690.0,2615178.0,3,"['balls', 'bucket']"
+2615178.0,2615688.0,3,"['balls', 'clear_ball']"
+2615688.0,2616980.0,3,['balls']
+2616980.0,2619054.0,3,"['balls', 'clear_ball']"
+2619054.0,2621690.0,3,['balls']
+2621690.0,2629900.0,3,['balls']
+2629900.0,2630138.0,3,"['balls', 'clear_ball']"
+2630138.0,2633776.0,3,['balls']
+2633776.0,2634014.0,3,"['balls', 'clear_ball']"
+2634014.0,2636690.0,3,['balls']
+2636690.0,2650980.0,3,['balls']
+2650980.0,2651690.0,3,"['balls', 'clear_ball']"
+2651690.0,2655740.0,3,"['balls', 'clear_ball']"
+2655740.0,2658392.0,3,['balls']
+2658392.0,2658494.0,3,"['balls', 'clear_ball']"
+2658494.0,2666690.0,3,['balls']
+2666690.0,2667130.0,3,['balls']
+2667130.0,2669714.0,3,"['balls', 'clear_ball']"
+2669714.0,2676922.0,3,['balls']
+2676922.0,2677058.0,3,"['balls', 'clear_ball']"
+2677058.0,2681690.0,3,['balls']
+2681690.0,2684266.0,3,['balls']
+2684266.0,2685218.0,3,"['balls', 'broom']"
+2685218.0,2688142.0,3,['balls']
+2688142.0,2688278.0,3,"['balls', 'clear_ball']"
+2688278.0,2696690.0,3,['balls']
+2696690.0,2697696.0,3,['balls']
+2697696.0,2701878.0,3,[]
+2701878.0,2711690.0,3,"['balls', 'bucket']"
+2711690.0,2726690.0,3,"['balls', 'bucket']"
+2726690.0,2741690.0,2,"['balls', 'bucket']"
+2741690.0,2756690.0,2,"['balls', 'bucket']"
+2756690.0,2771690.0,2,"['balls', 'bucket']"
+2771690.0,2786690.0,2,"['balls', 'bucket']"
+2786690.0,2801690.0,2,"['balls', 'bucket']"
+2801690.0,2816690.0,2,"['balls', 'bucket']"
+2816690.0,2831316.0,2,"['balls', 'bucket']"
+913716.0,928716.0,2,['popuppals']
+928716.0,943716.0,2,['popuppals']
+943716.0,958716.0,2,['popuppals']
+958716.0,973716.0,2,['popuppals']
+973716.0,988716.0,2,['popuppals']
+988716.0,1003716.0,2,['popuppals']
+1003716.0,1018716.0,2,['popuppals']
+1018716.0,1033716.0,2,['popuppals']
+1033716.0,1048716.0,2,['popuppals']
+1048716.0,1063716.0,2,['popuppals']
+1063716.0,1078716.0,2,['popuppals']
+1078716.0,1093716.0,2,['popuppals']
+1093716.0,1108716.0,2,['popuppals']
+1108716.0,1123716.0,2,['popuppals']
+1123716.0,1138716.0,2,['popuppals']
+1138716.0,1153716.0,2,['popuppals']
+1153716.0,1168716.0,2,['popuppals']
+1168716.0,1183716.0,2,['popuppals']
+1183716.0,1198716.0,2,['popuppals']
+1198716.0,1213716.0,2,['popuppals']
+1213716.0,1228716.0,2,['popuppals']
+1228716.0,1237328.0,3,['popuppals']
+1237328.0,1243716.0,3,[]
+1243716.0,1253002.0,3,[]
+1253002.0,1258716.0,3,"['shape_sorter', 'shape_sorter_blocks']"
+1258716.0,1273716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1273716.0,1288716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1288716.0,1303716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1303716.0,1318716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1318716.0,1333716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1333716.0,1348716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1348716.0,1363716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1363716.0,1378716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1378716.0,1393716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1393716.0,1408716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1408716.0,1423716.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+1423716.0,1427932.0,2,"['shape_sorter', 'shape_sorter_blocks']"
+297092.0,312092.0,2,"['balls', 'bucket']"
+312092.0,327092.0,2,"['balls', 'bucket']"
+327092.0,342092.0,2,"['balls', 'bucket']"
+342092.0,357092.0,2,"['balls', 'bucket']"
+357092.0,372092.0,2,"['balls', 'bucket']"
+372092.0,387092.0,2,"['balls', 'bucket']"
+387092.0,402092.0,2,"['balls', 'bucket']"
+402092.0,417092.0,2,"['balls', 'bucket']"
+417092.0,427380.0,2,"['balls', 'bucket']"
+427380.0,431868.0,2,[]
+431868.0,432092.0,2,"['balls', 'bucket']"
+432092.0,447092.0,2,"['balls', 'bucket']"
+447092.0,462092.0,2,"['balls', 'bucket']"
+462092.0,477092.0,2,"['balls', 'bucket']"
+477092.0,488464.0,2,"['balls', 'bucket']"
+488464.0,492092.0,2,[]
+492092.0,492150.0,2,[]
+492150.0,507092.0,2,"['balls', 'bucket']"
+507092.0,522092.0,2,"['balls', 'bucket']"
+522092.0,537092.0,3,"['balls', 'bucket']"
+537092.0,552092.0,3,"['balls', 'bucket']"
+552092.0,563176.0,3,"['balls', 'bucket']"
+563176.0,563652.0,3,"['balls', 'clear_ball']"
+563652.0,567092.0,3,['balls']
+567092.0,568378.0,3,['balls']
+568378.0,569772.0,3,"['balls', 'clear_ball']"
+569772.0,582092.0,3,['balls']
+582092.0,586192.0,3,['balls']
+586192.0,588948.0,3,"['balls', 'clear_ball']"
+588948.0,590988.0,3,['balls']
+590988.0,592688.0,3,"['balls', 'clear_ball']"
+592688.0,597092.0,3,"['grocery_cart', 'food', 'balls']"
+597092.0,612092.0,3,"['grocery_cart', 'food', 'balls']"
+612092.0,627092.0,3,"['grocery_cart', 'food', 'balls']"
+627092.0,642092.0,3,"['grocery_cart', 'food', 'balls']"
+642092.0,657092.0,3,"['grocery_cart', 'food', 'balls']"
+657092.0,657798.0,3,"['grocery_cart', 'food', 'balls']"
+657798.0,659600.0,3,"['balls', 'bucket']"
+659600.0,672092.0,3,"['grocery_cart', 'food', 'balls']"
+672092.0,687092.0,3,"['grocery_cart', 'food', 'balls']"
+687092.0,702092.0,3,"['grocery_cart', 'food', 'balls']"
+702092.0,717092.0,3,"['grocery_cart', 'food', 'balls']"
+717092.0,732092.0,3,"['grocery_cart', 'food', 'balls']"
+732092.0,747092.0,3,"['grocery_cart', 'food', 'balls']"
+747092.0,762092.0,3,"['grocery_cart', 'food', 'balls']"
+762092.0,777092.0,3,"['grocery_cart', 'food', 'balls']"
+777092.0,792092.0,3,"['grocery_cart', 'food', 'balls']"
+792092.0,807092.0,3,"['grocery_cart', 'food', 'balls']"
+807092.0,808078.0,3,"['grocery_cart', 'food', 'balls']"
+808078.0,819128.0,3,"['food', 'balls', 'bucket']"

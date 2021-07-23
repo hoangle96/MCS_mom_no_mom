@@ -1,0 +1,7 @@
+index,onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy,contain,g
+0,1589704,1633496.0,,,,,,,,,,31.0,,,,"['shape_sorter_blocks', 'shape_sorter']",1,1
+6,1633496,1637236.0,,,,,,,,,,,,,,no_ops,0,2
+7,1637236,1722066.0,2.0,,,,,,,,,,,,,['bricks'],0,2
+8,1722066,1725806.0,,,,,,,,,,,,,,no_ops,0,2
+9,1725806,1733456.0,13.0,,,,,,,,,,,,,['bricks'],0,2
+10,1733456,1829472.0,,,,,,,,,,,,,,no_ops,0,2

@@ -1,0 +1,23 @@
+onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy
+1068960,1069232,,,,,,,,1.0,,,,,,['pig']
+1070660,1099798,,,,,,,,,,1.0,,,,['shape_sorter']
+1099798,1111664,,,,,,,,,,1.0,,,1.0,"['xylophone', 'shape_sorter']"
+1111664,1113670,,,,,,,,,,1.0,,,,['shape_sorter']
+1113670,1141414,,,,,,,,,,1.0,,,2.0,"['xylophone', 'shape_sorter']"
+1141414,1146378,,,,,,,,,,1.0,,,,['shape_sorter']
+1146514,1152396,,,,,,,,,1.0,,,,,['popuppals']
+1152396,1156000,,,,,,,,,1.0,,,,3.0,"['popuppals', 'xylophone']"
+1156000,1343306,,,,,,,,,1.0,,,,,['popuppals']
+1343306,1349018,,,,,,,,,,,,,,no_ops
+1349018,1356260,,,,,,,,,6.0,,,,,['popuppals']
+1356260,1361428,,,,,,,,,6.0,,,,4.0,"['popuppals', 'xylophone']"
+1361428,1362550,,,,,,,,,6.0,,,,,['popuppals']
+1362550,1370778,,,,,,,,,6.0,,,,5.0,"['popuppals', 'xylophone']"
+1370778,1371968,,,,,,,,,6.0,,,,,['popuppals']
+1371968,1372342,,,,,,,,,6.0,,,,6.0,"['popuppals', 'xylophone']"
+1372342,1373668,,,,,,,,,6.0,,,,,['popuppals']
+1373668,1375164,,,,,,,,,6.0,,,,7.0,"['popuppals', 'xylophone']"
+1375164,1376592,,,,,,,,,6.0,,,,,['popuppals']
+1376932,1418480,,,,,,,,,,,,,8.0,['xylophone']
+1418480,1422254,,,,,,,,,,,,,,no_ops
+1422254,1568862,,,,,,,,,7.0,,,,,['popuppals']

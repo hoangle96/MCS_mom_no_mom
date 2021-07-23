@@ -1,0 +1,39 @@
+index,onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy,contain,g
+0,330446,334492,,,,,,,,,1.0,,,,,['popuppals'],0,1
+1,334492,339014,,,,,,,,,,,,,,no_ops,0,1
+2,339014,347480,,,,,,,,,2.0,,,,,['popuppals'],0,1
+3,347480,373660,,,,,,,,,,,,,,no_ops,0,1
+4,373660,376278,,,,,,,,,,1.0,,,,['shape_sorter'],1,2
+5,376278,380052,,,,,,,,,,,,,,no_ops,0,3
+6,380052,433432,,,,,,,,,,,1.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,4
+13,433432,437954,,,,,,,,,,,,,,no_ops,0,5
+14,437954,500344,,,,,,,,,,,2.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,6
+28,500344,503234,,,,,,,,,,12.0,3.0,,1.0,"['xylophone', 'shape_sorter', 'shape_sorter_blocks']",0,7
+29,503234,506872,,,,,,,,,,12.0,3.0,,,"['shape_sorter', 'shape_sorter_blocks']",1,8
+30,509218,516970,,,,,,,,,,,,,2.0,['xylophone'],0,9
+31,516970,520234,,,,,,,,,,,,,,no_ops,0,9
+32,520234,522648,,,,,,,,,,,,,3.0,['xylophone'],0,9
+33,523192,525810,,,,,,,,,,13.0,4.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,10
+35,525810,529278,,,,,,,,,,,4.0,,4.0,"['xylophone', 'shape_sorter_blocks']",0,11
+36,529278,546618,,,,,,,,,,,4.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,12
+43,546618,554710,,,,,,,,,,,4.0,,5.0,"['xylophone', 'shape_sorter_blocks']",0,13
+44,554710,631482,,,,,,,,,,,4.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,14
+57,633862,675240,1.0,,,,,,,,,,,,,['bricks'],0,15
+58,675240,678266,,,,,,,,,,,,,,no_ops,0,15
+59,678266,704922,,,,,,,,,,22.0,,,,['shape_sorter'],1,16
+60,704922,710498,,,,,,,,,,,,,,no_ops,0,17
+61,710498,725390,,,,,,,,,,,7.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,18
+65,725390,729946,,,,,,,,,,,,,,no_ops,0,19
+66,729946,793934,,,,,,,,,,25.0,8.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,20
+76,793934,804338,,,,,,,,,,,,,,no_ops,0,21
+77,804338,828954,,,,,,,,,,,12.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,22
+83,828954,830586,,,,,,,,,,,13.0,,6.0,"['xylophone', 'shape_sorter_blocks']",0,23
+84,830586,833782,,,,,,,,,,,13.0,,,['shape_sorter_blocks'],1,24
+85,833782,836536,,,,,,,,,,,13.0,,7.0,"['xylophone', 'shape_sorter_blocks']",0,25
+86,836536,840174,,,,,,,,,,,13.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,26
+89,840174,840922,,,,,,,,,,,13.0,,8.0,"['xylophone', 'shape_sorter_blocks']",0,27
+90,840922,845886,,,,,,,,,,,13.0,,,['shape_sorter_blocks'],1,28
+91,845886,849456,,,,,,,,,,,13.0,,9.0,"['xylophone', 'shape_sorter_blocks']",0,29
+92,849456,855576,,,,,,,,,,,13.0,,,"['shape_sorter_blocks', 'shape_sorter']",1,30
+95,855576,860166,,,,,,,,,,,13.0,,10.0,"['xylophone', 'shape_sorter_blocks']",0,31
+96,860166,861900,,,,,,,,,,,13.0,,,['shape_sorter_blocks'],1,32

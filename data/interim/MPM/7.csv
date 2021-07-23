@@ -1,0 +1,14 @@
+level_0,index,onset,offset,bricks_ord,bucket_ord,balls_ord,broom_ord,clear_ball_ord,food_ord,grocery_cart_ord,pig_ord,popuppals_ord,shape_sorter_ord,shape_sorter_blocks_ord,stroller_ord,xylophone_ord,toy,contain,g
+0,0,258842,270334,,,,,1.0,,,,,,,,,['clear_ball'],0,1
+1,1,270334,287130,,,,,,,,,,,,,,no_ops,0,1
+2,2,287130,301308,,1.0,,,,,,,,,,,,"['bucket', 'balls']",1,2
+5,5,301308,310930,,1.0,,1.0,,,,,,,,,,"['broom', 'bucket']",0,3
+6,6,310930,318818,,1.0,,,,,,,,,,,,"['bucket', 'balls']",1,4
+8,8,318818,540022,,,2.0,,,,,,,,,,,"['grocery_cart', 'balls', 'food']",0,5
+9,33,540022,544442,,,,,,,,,,,,,,no_ops,0,5
+10,34,544442,696592,,,,,,2.0,,,,,,,,"['food', 'grocery_cart']",0,5
+11,49,696592,703358,,,,,,,,,,,,,,no_ops,0,5
+12,50,703358,709716,,2.0,,,,,,,,,,,,['bucket'],1,6
+13,51,711756,728892,,,,2.0,,,,,,,,,,['broom'],0,7
+14,52,728892,733550,,,,,,,,,,,,,,no_ops,0,7
+15,53,733550,760682,,,,3.0,,,,,,,,,,['broom'],0,7
