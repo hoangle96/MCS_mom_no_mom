@@ -167,3 +167,161 @@ def get_feature_vector(left_pt, right_pt, df, no_ops_threshold):
     else:
         toy_per_sc = len(unique_toys)/n_episode
     return n_episode/segment_len, len(unique_toys)/segment_len, toy_per_sc
+
+def get_consecutive_toys(df, toys_of_interest):
+    merge_time = 0
+    merge_cnt = 0
+    df = df.reset_index(drop=True)
+    df['merged_toy'] = 0
+    for container, contained in toys_of_interest.items():
+        proceed = False
+
+        if isinstance(contained, list) or isinstance(contained, set):
+            all_cols_condition = []
+            all_cols_condition.append(df[container+"_ord"].notna().any())
+            for t in contained:
+                all_cols_condition.append(df[t+"_ord"].notna().any())
+            proceed = np.any(all_cols_condition)
+            toys_of_interest_list = []
+            toys_of_interest_list.append(container)
+            toys_of_interest_list.extend(contained)
+            # toys_of_interest_list = np.array(toys_of_interest_list)
+            contained_tuple = tuple(contained)
+            container_tuple = tuple([container])
+        else:
+            proceed = df[container+"_ord"].notna().any() and df[contained+"_ord"].notna().any()
+            toys_of_interest_list = [container, contained]
+            contained_tuple = tuple([contained])
+            container_tuple = tuple([container])
+
+
+        if proceed:
+            df = df.reset_index()
+            # print(df)
+            df['duration'] = df['offset']  - df['onset'] 
+            df['contain'] = 0
+
+            df['contained_toys_only'] = 0
+            df['container_toys_only'] = 0
+            df['container_toys'] = 0
+            # check to see if the row contains the toys we care about
+            df_toy_np = df.toy.tolist()
+            # condition: the toys in the row are a subset of subset of the toys of interest
+            toy_of_interest_set = set(toys_of_interest_list)
+            row_condition = [set(i).issubset(toy_of_interest_set) for i in df_toy_np]
+            df.loc[row_condition, 'contain'] = 1
+
+            contained_row_condition = [set(i).issubset(contained_tuple) for i in df_toy_np]
+            df.loc[contained_row_condition, 'contained_toys_only'] = 1
+
+            container_row_condition = [set(i).issubset(container_tuple) for i in df_toy_np]
+            df.loc[container_row_condition, 'container_toys_only'] = 1
+
+            container_row_condition = [set(container_tuple).issubset(set(i)) for i in df_toy_np]
+            df.loc[container_row_condition, 'container_toys'] = 1
+
+            # print(df.loc[:,'toy'])
+            # print(df)
+
+            # if the infants play with the contained toys or container toys for a long time **needs some qualification here, set to 30s for now**
+            # print(df.loc[(df.loc[:,'contain'] == 1) & (df.loc[:,'toy'].isin(contained_tuple))])
+            df.loc[(df.loc[:,'contain'] == 1) & (df.loc[:,'contained_toys_only'] == 1) & (df.loc[:,'duration'] >= 12 * 1000), 'contain'] = 0
+            df.loc[(df.loc[:,'contain'] == 1) & (df.loc[:,'container_toys_only'] == 1) & (df.loc[:,'duration'] >= 12 * 1000), 'contain'] = 0
+            
+            # print(df)
+            # group the consecutive rows that have the toy we care together
+            df['g'] = df['contain'].ne(df['contain'].shift()).cumsum()
+            # print(df[['toy', 'contain', 'contained_toys_only', 'container_toys_only', 'container_toys', 'g']])
+
+            for group in df['g'].unique():
+                if len(df.loc[(df['g'] == group)&(df['contain'] == 1), :]) > 1:
+                    merged = False
+                    toy_playing_now = df.loc[(df['g'] == group)&(df['contain'] == 1), 'toy'].to_numpy().tolist()
+                    toy_playing_now = tuple(set(itertools.chain.from_iterable(toy_playing_now)))
+                    # cases where there are three toys, check to make sure not over-merging
+                    if len(toy_playing_now) == 3:
+                        toy_set = df.loc[(df['g'] == group)&(df['contain'] == 1), 'toy'].to_numpy().tolist()
+                        current_df = df.loc[(df['g'] == group)&(df['contain'] == 1), :].copy()
+                        current_df['check_three_toys'] = 0
+                        for idx, t in enumerate(contained, 1):
+                            contained_row_condition = [set(i).issubset([container, t]) for i in toy_set]
+                            current_df.loc[contained_row_condition & (current_df.loc[:,'check_three_toys'] == 0), 'check_three_toys'] = idx
+                            # print(current_df)
+                        contained_row_condition = [toy_of_interest_set.issubset(set(i)) for i in toy_set]
+                        # current_df.loc[contained_row_condition, 'check_three_toys'] = 3
+
+                        # if consecutive and long duration -> don't merge
+                        current_df['check_g'] = current_df['check_three_toys'].ne(current_df['check_three_toys'].shift()).cumsum()
+                        # for check_group in current_df['check_g'].unique():
+                        print(current_df[["onset", "offset", "check_three_toys", "check_g", "toy"]])
+                        sub_df = current_df.loc[(current_df['check_g'] == 1)]
+                        first_idx = sub_df.index.tolist()[0]
+                        last_idx = sub_df.index.tolist()[-1]
+                        print(sub_df[["onset", "offset", "check_three_toys", "check_g", "toy"]])
+
+                        check_duration = sub_df.loc[last_idx, 'offset'] - sub_df.loc[first_idx, 'onset']
+                        if check_duration > 12*1000:
+                            # merge the first one
+                            curr_toy_set = sub_df['toy'].to_numpy().tolist()
+                            curr_toy_set = tuple(set(itertools.chain.from_iterable(curr_toy_set)))
+
+                            df.iloc[first_idx, df.columns.get_loc('offset')] = df.iloc[last_idx, df.columns.get_loc('offset')]
+                            df.at[first_idx, 'toy'] = curr_toy_set
+                            df.at[first_idx,'merged_toy'] = 1
+                            merge_cnt += 1
+                            merge_time += df.iloc[last_idx, df.columns.get_loc('offset')] - df.iloc[first_idx, df.columns.get_loc('onset')]
+                            df = df.drop(index=range(first_idx+1, last_idx+1))
+                            df = df.reset_index(drop=True)
+
+                            # sub_df = current_df.loc[(current_df['check_g'] > 1)]
+
+                            # first_idx = sub_df.index.tolist()[0]
+                            # last_idx = sub_df.index.tolist()[-1]
+                            group_list = current_df['check_g'].unique()
+                            for g_ in group_list[1:]:
+                                df_include = current_df.loc[(current_df['contain'] ==1)&(current_df.loc[:,'container_toys'] == 1)&(current_df['check_g'] == g_), :]
+                                if len(df_include) > 0:
+                                    print(df_include[["onset", "offset", "check_three_toys", "check_g", "toy"]])
+                                    first_idx = df_include.index.tolist()[0]
+                                    last_idx = df_include.index.tolist()[-1]
+                                    df.iloc[first_idx, df.columns.get_loc('offset')] = df.iloc[last_idx, df.columns.get_loc('offset')]
+                                    df.at[first_idx, 'toy'] = curr_toy_set
+                                    df.at[first_idx,'merged_toy'] = 1
+                                    merge_cnt += 1
+                                    merge_time += df.iloc[last_idx, df.columns.get_loc('offset')] - df.iloc[first_idx, df.columns.get_loc('onset')]
+                                    df = df.drop(index=range(first_idx+1, last_idx+1))
+                                    df = df.reset_index(drop=True)
+                            merged = True
+                        else:
+                            df_include = df.loc[(df['g'] == group)&(df['contain'] >= 1)&(df.loc[:,'container_toys'] == 1), :]
+                            if len(df_include) > 0:
+                                idx = df_include.index.tolist()[0]
+                                df_ = df.loc[(df['g'] == group)&(df['contain'] == 1), :]
+                                print(df_[["onset", "offset", "check_three_toys", "check_g", "toy"]])
+                                last_idx = df_.index.tolist()[-1]
+                                df.iloc[idx, df.columns.get_loc('offset')] = df.iloc[last_idx, df.columns.get_loc('offset')]
+                                df.at[idx, 'toy'] = toy_playing_now
+                                df.at[idx,'merged_toy'] = 1
+                                merge_cnt += 1
+                                merge_time += df.iloc[last_idx, df.columns.get_loc('offset')] - df.iloc[idx, df.columns.get_loc('onset')]
+                                df = df.drop(index=range(idx+1, last_idx+1))
+                                df = df.reset_index(drop=True)
+                    else: # if not merged:
+                    # start with the container in the toy sets
+                        df_include = df.loc[(df['g'] == group)&(df['contain'] >= 1)&(df.loc[:,'container_toys'] == 1), :]
+                        # print(df_include[['toy', 'contain', 'contained_toys_only', 'container_toys_only', 'container_toys', 'g']])
+                        if len(df_include) > 0:
+                            idx = df_include.index.tolist()[0]
+                            df_ = df.loc[(df['g'] == group)&(df['contain'] == 1), :]
+                            print(df_)
+                            last_idx = df_.index.tolist()[-1]
+                            df.iloc[idx, df.columns.get_loc('offset')] = df.iloc[last_idx, df.columns.get_loc('offset')]
+                            df.at[idx, 'toy'] = toy_playing_now
+                            df.at[idx,'merged_toy'] = 1
+                            merge_cnt += 1
+                            merge_time += df.iloc[last_idx, df.columns.get_loc('offset')] - df.iloc[idx, df.columns.get_loc('onset')]
+                            df = df.drop(index=range(idx+1, last_idx+1))
+                            df = df.reset_index(drop=True)
+    df['duration'] = df['offset'] - df['onset']
+    # print(df)
+    return df, merge_cnt, merge_time

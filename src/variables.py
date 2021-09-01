@@ -30,10 +30,8 @@ toys_list = ['bricks', 'pig', 'popuppals', 'xylophone', 'shape_sorter', 'shape_s
              'broom', 'clear_ball', 'balls', 'food', 'grocery_cart', 'stroller', 'bucket']
 print(len(toys_list))
 
-stationary_toys_list = ['bricks', 'pig', 'popuppals',
-                        'xylophone', 'shape_sorter', 'shape_sorter_blocks']
-mobile_toys_list = ['broom', 'bucket', 'stroller',
-                    'grocery_cart', 'balls', 'food']
+stationary_toys_list = ['shape_sorter', 'shape_sorter_blocks','xylophone','bricks', 'pig', 'popuppals']
+mobile_toys_list = ['grocery_cart', 'food', 'bucket','balls','stroller','broom', 'clear_ball']
 
 # map task to the correct dictionary
 toy_to_task_dict = {'MPS': stationary_toys_list, 'MPM': mobile_toys_list,
@@ -41,6 +39,95 @@ toy_to_task_dict = {'MPS': stationary_toys_list, 'MPM': mobile_toys_list,
 # map toy to the columns
 toys_dict = {'bricks': bricks_cols, 'pig': pig_cols, 'popuppals': popuppals_cols, 'xylophone': xylophone_cols, 'shape_sorter': shape_sorter_cols,
              'shape_sorter_blocks': shape_sorter_blocks_cols, 'broom': broom_cols, 'clear_ball': clear_ball_cols, 'balls': balls_cols,
-             'food': food_cols, 'grocery_cart': grocery_cart_cols, 'stroller': stroller_cols}
+             'food': food_cols, 'grocery_cart': grocery_cart_cols, 'stroller': stroller_cols }
 
 toys_of_interest_dict = {'MPS': {'shape_sorter': 'shape_sorter_blocks'}, 'NMS': {'shape_sorter': 'shape_sorter_blocks'}, 'NMM':{'grocery_cart': ['food', 'balls'], 'bucket': ['food', 'balls']},  'MPM':{'grocery_cart': ['food', 'balls'], 'bucket': ['food', 'balls']}}
+non_compatible_toys_dict = {'bricks': ['pig', 'popuppals','xylophone', 'shape_sorter', 'shape_sorter_blocks'],\
+                            'pig': ['bricks', 'popuppals','xylophone', 'shape_sorter', 'shape_sorter_blocks'],\
+                            'popuppals': ['bricks', 'pig', 'xylophone', 'shape_sorter', 'shape_sorter_blocks'],\
+                            'xylophone': ['bricks', 'pig', 'popuppals', 'shape_sorter', 'shape_sorter_blocks'],\
+                            'shape_sorter': ['bricks', 'pig', 'popuppals', 'xylophone'],\
+                            'shape_sorter_blocks': ['bricks', 'pig', 'popuppals', 'xylophone'], \
+                            'broom': ['bucket', 'stroller', 'grocery_cart', 'balls', 'food'],\
+                            'bucket': ['broom', 'stroller', 'clear_ball', 'grocery_cart'],\
+                            'clear_ball': ['broom', 'bucket', 'stroller', 'grocery_cart', 'balls', 'food'],\
+                            'balls': ['broom', 'stroller', 'clear_ball'],\
+                            'food': ['broom', 'stroller', 'clear_ball'],\
+                            'grocery_cart': ['broom', 'stroller', 'clear_ball', 'bucket'],
+                            'stroller': ['broom', 'bucket', 'grocery_cart', 'balls', 'food', 'clear_ball']}
+# threshold, in ms to consider toy switching
+small_no_ops_threshold_dict = {'MPS': 7000, 'MPM': 7000, 'NMS': 7000, 'NMM': 7000}
+condition_name = {"MPS" : "With caregiver, fine motor toys",\
+                "NMS" : "Without caregiver, fine motor toys",\
+                "NMM" : "Without caregiver, gross motor toys",\
+                "MPM" : "With caregiver, gross motor toys"
+                }
+state_color_dict = {"0":'grey',  "1":'green', "2":'purple', "3":'darkorange', "4":'darkslateblue',  "5":'crimson', "6":'darkolivegreen', "7":'blue'}
+toy_colors_dict = {'bricks': 'blue', 'pig': 'orange', 'popuppals': 'green', 'xylophone': 'red', 'shape_sorter': 'skyblue',
+                                    'shape_sorter_blocks': 'salmon', 'broom': 'purple', 'clear_ball': 'teal', 'balls': 'cadetblue',
+                                    'food': 'chocolate', 'grocery_cart': 'dodgerblue', 'stroller': 'violet', 'bucket': 'navy', 'no_toy': "slategrey"}
+
+state_color_dict_shades = {"0":'lightgrey',  "1":'red', "2":'salmon', "3":'royalblue', "4":'darkblue',  "5":'midnightblue', "6":'midnightblue', "7":'blue'}
+
+# state_name_dict = {
+#     5: {
+#         1:{
+#             3: {2: "no_toy", 1: 'F', 0: 'E'},
+#             4: {3: "no_toy", 0: "F+", 1: 'E',  2: 'E+'},
+#             5: {4: "no_toy", 0: 'F+', 2: "F", 1:"E", 3: 'E+'},
+#             6: {5: "no_toy", 2: "F+", 3: 'F', 0: 'E', 4: "E+", 1: 'E++'}
+#         },
+#         1.5:{
+#             3: {2: "no_toy", 1: 'F', 0: 'E'},
+#             4: {3: "no_toy", 0: "F", 2: 'E',  1: 'E+'},
+#             5: {4: "no_toy", 2: 'F+', 3: "F", 0:"E", 1: 'E+'},
+#             6: {5: "no_toy", 2: "F+", 3: 'F', 4: 'E', 0: "E+", 1: 'E++'}
+#         },
+#         2:{
+#             3: {2: "no_toy", 1: 'F', 0: 'E'},
+#             4: {3: "no_toy", 1: "F", 2: 'E',  0: 'E+'},
+#             5: {4: "no_toy", 3: 'F+', 0: "F", 2:"E", 1: 'E+'},
+#             6: {5: "no_toy", 1: "F+", 0: 'F', 2: 'E', 4: "E+", 3: 'E++'}
+#         }
+#     },
+#     7: {
+#         1:{
+#             3: {2: "no_toy", 0: 'F', 1: 'E'},
+#             4: {3: "no_toy", 2: "F", 1: 'E',  0: 'E+'},
+#             5: {4: "no_toy", 2: 'F+', 1: "F", 0:"E", 3: 'E+'},
+#             6: {5: "no_toy", 2: "F+", 4: 'F', 3: 'E', 0: "E+", 1: 'E++'}
+#         },
+#         1.5:{
+#             3: {2: "no_toy", 1: 'F', 0: 'E'},
+#             4: {3: "no_toy", 0: "F", 1: 'E', 2: 'E+'},
+#             5: {4: "no_toy", 2: 'F+', 1: "F", 0:"E", 3: 'E+'},
+#             6: {5: "no_toy", 0: "F+", 3: 'F+', 2: 'F', 4: "E", 1: 'E+'}
+#         },
+#         2:{
+#             3: {2: "no_toy", 0: 'F', 1: 'E'},
+#             4: {3: "no_toy", 0: "F", 2: 'E',  1: 'E+'},
+#             5: {4: "no_toy", 1: 'F+', 0: "F", 3:"E", 2: 'E+'},
+#             6: {5: "no_toy", 3: 'F+', 0: "F", 2:"E", 4:"E+", 1: 'E++'},
+#         }
+#     },
+#     10:{
+#         1:{
+#             3: {2: "no_toy", 0: 'F', 1: 'E'},
+#             4: {3: "no_toy", 0: "F", 1: 'E',  2: 'E+'},
+#             5: {4: "no_toy", 0: 'F+', 1: "F", 3:"E", 2: 'E+'},
+#             6: {5: "no_toy", 0: 'F+', 1: "F", 2:"E", 4:"E+", 3: 'E++'},
+#         },
+#         1.5:{
+#             3: {2: "no_toy", 1: 'F', 0: 'E'},
+#             4: {3: "no_toy", 1: 'F', 0: 'E', 2: 'E+'},
+#             5: {4: "no_toy", 2: 'F+', 3: "F", 1:"E", 0: 'E+'},
+#             6: {5: "no_toy", 2: 'F+', 4: "F", 0:"E", 1:"E+", 3: 'E++'},
+#         },
+#         2:{
+#             3: {2: "no_toy", 0: 'F', 1: 'E'},
+#             4: {3: "no_toy", 2: 'F', 1: 'E', 0: 'E+'},
+#             5: {4: "no_toy", 1: 'F+', 3: "F", 0:"E", 2: 'E+'},
+#             6: {5: "no_toy", 1: 'F+', 3: "F", 0:"E", 2:"E+", 4: 'E++'},
+#         }
+#     }
+# }
