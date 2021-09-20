@@ -67,10 +67,10 @@ interval_length = 1.5
 no_ops_time = 10
 n_states = 5
 feature_set = 'n_new_toy_ratio'
-with open('../data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_all_pred_prob_'+str(interval_length)+'_min.pickle', 'rb') as f:
-    all_prob_dict_all = pickle.load(f)
-with open('../data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_'+str(interval_length)+'_min.pickle', 'rb') as f:
+with open('../data/result/pickle_files/pred_10s_1.5min_5states_20210907.pickle', 'rb') as f:
     merged_pred_dict_all = pickle.load(f)
+with open('../data/result/pickle_files/pred_prob_10s_1.5min_5states_20210907.pickle', 'rb') as f:
+    all_prob_dict_all= pickle.load(f)
 # print(len(all_prob_dict_all["MPS"][1]))
 subj_list = np.array(list(all_prob_dict_all['MPS'].keys()))
 rank_index = []
