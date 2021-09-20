@@ -15,7 +15,7 @@ import pandas as pd
 from pathlib import Path
 import importlib
 from collections import OrderedDict
-from all_visualization import rank_state
+from all_visualization_20210824 import rank_state
 from merge_with_locomotion import merge_movement
 
 shift = .5
@@ -30,13 +30,13 @@ for feature_set in ['n_new_toy_ratio', 'n_new_toy_ratio_and_fav_toy_till_now', '
         for interval_length in [1.5, 2, 1]:
             print('interval_length', interval_length)
 
-            with open("./data/interim/20210824_"+str(no_ops_time)+"_no_ops_threshold_feature_dict_with_"+feature_set+"_"+str(interval_length)+"_min.pickle", 'rb') as f:
+            with open("./data/interim/20210907_"+str(no_ops_time)+"_no_ops_threshold_feature_dict_with_"+feature_set+"_"+str(interval_length)+"_min.pickle", 'rb') as f:
                 feature_dict = pickle.load(f)
 
-            with open("./data/interim/20210824_"+str(no_ops_time)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min.pickle", 'rb') as f:
+            with open("./data/interim/20210907_"+str(no_ops_time)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min.pickle", 'rb') as f:
                 time_arr_dict = pickle.load(f)
 
-            with open("./data/interim/20210824_"+str(no_ops_time)+"_no_ops_threshold_label_"+str(interval_length)+"_min.pickle", 'rb') as f:
+            with open("./data/interim/20210907_"+str(no_ops_time)+"_no_ops_threshold_label_"+str(interval_length)+"_min.pickle", 'rb') as f:
                 labels_dict = pickle.load(f)
 
             with open('./data/interim/20210824_'+str(no_ops_time)+'_no_ops_threshold_clean_data_for_feature_engineering.pickle', 'rb') as f:
@@ -92,7 +92,7 @@ for feature_set in ['n_new_toy_ratio', 'n_new_toy_ratio_and_fav_toy_till_now', '
                                                 discretized_n_new_toys.reshape((-1,1)),\
                                                 fav_toy_rate_discretized.reshape((-1,1))))
 
-            with open("./data/interim/20210824_"+feature_set+'_'+str(no_ops_time)+"_no_ops_threshold_discretized_input_list_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            with open("./data/interim/20210907_"+feature_set+'_'+str(no_ops_time)+"_no_ops_threshold_discretized_input_list_"+str(interval_length)+"_min.pickle", 'wb+') as f:
                 pickle.dump(discretized_input_list, f)
             list_seq = convert_to_list_seqs(discretized_input_list, len_list)
             list_seq = convert_to_int(list_seq)
@@ -111,9 +111,9 @@ for feature_set in ['n_new_toy_ratio', 'n_new_toy_ratio_and_fav_toy_till_now', '
                             p.frozen = True
                 model.fit(list_seq, labels = all_labels)
 
-                model_file_name = "model_20210824_"+feature_set+"_"+str(interval_length)+"_interval_length_"+str(no_ops_time)+"_no_ops_threshold_"+str(n_states)+'_states.pickle'
-                model_file_path = Path('./models/hmm/20210824__30s_offset/'+feature_set)/model_file_name
-                Path('./models/hmm/20210824__30s_offset/'+feature_set).mkdir(parents = True, exist_ok = True)
+                model_file_name = "model_20210907_"+feature_set+"_"+str(interval_length)+"_interval_length_"+str(no_ops_time)+"_no_ops_threshold_"+str(n_states)+'_states.pickle'
+                model_file_path = Path('./models/hmm/20210907/'+feature_set)/model_file_name
+                Path('./models/hmm/20210907/'+feature_set).mkdir(parents = True, exist_ok = True)
                 with open(model_file_path, 'wb+') as f:
                     pickle.dump(model, f)
 
@@ -139,7 +139,7 @@ for feature_set in ['n_new_toy_ratio', 'n_new_toy_ratio_and_fav_toy_till_now', '
                 tuples = list(zip(*index_list))
                 index = pd.MultiIndex.from_tuples(tuples, names=['feature', 'observation'])
                 df = pd.DataFrame(data, index = index, columns = ['state '+str(state_name_dict[i]) for i in range(n_states)])
-                file_path = Path('/scratch/mom_no_mom/reports/20210824/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'/state_'+str(n_states))
+                file_path = Path('/scratch/mom_no_mom/reports/20210907/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'/state_'+str(n_states))
                 file_path.mkdir(parents = True, exist_ok = True)
                 file_name = 'mean_'+str(n_states)+"_states"+".csv"
                 save_csv(df, file_path, file_name)
@@ -205,10 +205,10 @@ for feature_set in ['n_new_toy_ratio', 'n_new_toy_ratio_and_fav_toy_till_now', '
                             
                             log_prob_list.append(log_prob)
 
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_all_prob_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_all_prob_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(all_proba_dict, f)
 
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(pred_dict, f)
 
                 init_prob = {}
@@ -302,19 +302,19 @@ for feature_set in ['n_new_toy_ratio', 'n_new_toy_ratio_and_fav_toy_till_now', '
                         #     print(df)
                         merged_pred_w_locomotion[task][subj] = merge_movement(df, babymovement_by_task_dict[subj])
                     # print(merged_pred_w_locomotion)
-                    with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_locomotion_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                    with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_locomotion_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                         pickle.dump(merged_pred_w_locomotion, f)
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(merged_pred_dict_all, f)
 
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_prob_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_prob_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(merged_proba_dict_all, f)
 
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_time_arr_dict_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_time_arr_dict_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(time_subj_dict_all, f)
                 
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_theshold_'+str(n_states)+'_states_toy_pred_dict_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_theshold_'+str(n_states)+'_states_toy_pred_dict_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(toy_pred_list, f)
 
-                with open('./data/interim/20210824'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_locomotion_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+                with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_locomotion_'+str(interval_length)+'_min.pickle', 'wb+') as f:
                     pickle.dump(merged_pred_w_locomotion, f)
