@@ -653,7 +653,7 @@ def draw_toy_state_with_std(state_name_dict, toy_to_pred_dict, toy_list, std_dic
     plt.xlabel('States', fontsize = 28)
     # plt.xtick(range(len(state_name_dict)-1), list(state_name_dict.values()))
     plt.ylim(top = 1)
-    plt.yticks(fontsize = 28)
+    plt.yticks(np.arange(0, 1.1,.2), [str(i) for i in np.arange(0, 110,20)], fontsize = 28)
     plt.title(name, fontsize = 28)
     plt.grid(False)
     if not indv:
@@ -679,7 +679,9 @@ def draw_state_distribution(flatten_pred_dict, n_states, state_name_dict, title,
 
     plt.xticks(range(n_states), list(state_name_dict.values()), fontsize = 26)
     plt.ylabel("Pct. time spent in each state, all subjects", fontsize = 24)
-    plt.yticks(fontsize = 26)
+    locs, labels = plt.yticks()
+    # labels = [str(100*float(x.get_text())) for x in labels]
+    plt.yticks(np.arange(0, 0.9, 0.1), [str(int(x*100)) for x in np.arange(0, 0.9, 0.1)], fontsize = 26)
     plt.xlabel("States", fontsize = 26)
 
     plt.ylim(top = .8)
@@ -736,7 +738,7 @@ def draw_mean_state_locotion_across_conditions_separate_mean_std(mean_dict, std_
     """
     plt.style.use('seaborn')
     offset = 10
-    fig, ax = plt.subplots(figsize = (14,16))
+    fig, ax = plt.subplots(figsize = (30,16))
     task_edge_color = {"MPS": 'r','MPM': 'b', "NMS": 'r', 'NMM': 'b'}
     task_face_color = {"MPS": 'r','MPM': 'b', "NMS": 'none', 'NMM': 'none'}
     task_linestyle = {"MPS": '-','MPM': '-', "NMS": "--", 'NMM': "--"}
@@ -765,6 +767,7 @@ def draw_mean_state_locotion_across_conditions_separate_mean_std(mean_dict, std_
     ax.legend(loc = 2, fontsize = 24)
     ax.set_xticks(np.arange(1.5, 1.5+offset*n_states, offset))
     ax.set_xticklabels([str(i) for i in range(n_states)],fontsize = 28)
+    # ax.set_yticklabels()
     ax.set_xlabel("States", fontsize = 28)
     ax.set_ylabel(ylabel, fontsize = 28)
     plt.yticks(fontsize = 28)
