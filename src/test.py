@@ -31,114 +31,6 @@ cnt = np.array([0.3, 0.2, 0.5])
 print(cnt[states == 1])
 
 # %%
-bins = [0, 30, 60, 90, 120, 150, 180, 240, 270, 300]
-bins_3 = np.arange(0, 181, 90)
-print(bins_3)
-x = np.array([33, 30, 12, 121, 120, 181, 305])
-print(np.digitize(x, bins_3, right=False))
-# %%
-# print(isinstance("no_ops", Hashable))
-# n_states_6 = [-24.10542593139329,-23.42322274430872, -30.25212157223115,-23.07387727085122, -22.855473735190806]
-# #[-24.10542593139329, -23.42322274430872]
-# # [-23.432169840574453, -24.70643724698869, -24.61863174413091, -22.395372185205854, -22.465909692790895]
-# n_states_5 = [-25.39271022169258, -25.134310266830813, -24.009501640247713, -23.593880476787557, -23.31005141154891]
-# n_states_7 = [-23.99918504006178, -24.839157442748636, -26.45228727947142, -23.49605994363116, -23.990978644987013]
-# n_states_4 = [-25.08335404524726, -24.504601023166725, -24.414900929208063, -26.589390944333175, -23.71076975934144]
-# n_states_8 = [-25.367415386720435, -27.361826320066314, -23.831535480715278, -23.111846299018513]
-
-
-# print(np.mean(n_states_4))
-# print(np.mean(n_states_5))
-# print(np.mean(n_states_6))
-# print(np.mean(n_states_7))
-# print(np.mean(n_states_8))
-
-# print(np.isin(['a', 'b'], ['c,d']))
-# test = set(np.array(['b','c']).tolist())
-# s1 = [np.array(['a']), np.array(['b']), np.array(['b', 'c']), np.array(['a','b', 'c'])]
-# row_condition = [set(i).issubset(test) for i in s1]
-# # row_condition = [np.isin(i, test).any() and not(np.isin(i,test, invert = True).any()) for i in s1]
-
-# print(row_condition)
-# abc = [0].extend(['a', 'b'])
-# print(abc)
-# s2 = pd.Series(['c','d'])
-# print(pd.Series(list(set(s1).intersection(set(s2)))))
-
-# a = np.array([253952.0, 268952.0, 283952.0, 298952.0, 313952.0, 328952.0, 343952.0, 358952.0, 373952.0, 388952.0, 403952.0, 418952.0, 433952.0, 448952.0, 463952.0, 478952.0, 493952.0, 508952.0, 523952.0, 538952.0, 553952.0, 568952.0, 583952.0, 598952.0, 613952.0, 628952.0, 643952.0, 658952.0, 673952.0, 688952.0, 703952.0, 718952.0, 733952.0, 748952.0, 749904])
-# print(np.diff(a))
-# with open('./data/interim/20210726_new_no_ops_threshold_clean_data_for_feature_engineering.pickle', 'rb') as f:
-#     task_to_storing_dict = pickle.load(f)
-
-# subj_list = list(task_to_storing_dict['MPS'].keys())
-# for subj in subj_list:
-#     df_check = pd.DataFrame()
-#     for task in tasks:
-#         df_list = task_to_storing_dict[task][subj]
-#         if task == "NMS" and subj == 35:
-#             print(df_list)
-#         for df_ in df_list:
-#             df_check = pd.concat([df_check, df_])
-#     df_check = df_check[['onset', 'offset', 'toy']]
-#     df_check = df_check.sort_values(by=['onset'])
-#     df_check.to_csv('./data/interim/check_reading_data/'+str(subj)+'.csv', index = False)
-
-# with open("./data/interim/20210726_"+str(5)+"_no_ops_threshold_discretized_input_list_"+str(1.5)+"_min.pickle", 'rb') as f:
-#     discretized_input_list_1 = pickle.load(f)
-
-# with open("./data/interim/20210726_"+str(7)+"_no_ops_threshold_discretized_input_list_"+str(1.5)+"_min.pickle", 'rb') as f:
-#     discretized_input_list_2 = pickle.load(f)
-
-# with open('./data/interim/20210726_'+str(5)+'_no_ops_threshold_'+str(5)+'_states_prediction_'+str(1.5)+'_min.pickle', 'rb') as f:
-#     pred_dict_1 = pickle.load(f)
-
-# with open('./data/interim/20210726_'+str(7)+'_no_ops_threshold_'+str(5)+'_states_prediction_'+str(1.5)+'_min.pickle', 'rb') as f:
-#     pred_dict_2 = pickle.load(f)
-
-# with open('../data/interim/20210726_'+str(7)+'_no_ops_threshold_'+str(5)+'_states_prediction_'+str(1.5)+'_min.pickle', 'wb+') as f:
-#     pred_dict_7s_1_5min = pickle.load(f)
-
-# # print(np.equal(discretized_input_list_1,discretized_input_list_2))
-# print(pred_dict_7s_1_5min)
-# print(pred_dict_2)
-
-# print(int("01"))
-
-print('no_ops' in 'no_ops')
-with open('./data/interim/20210726_7_no_ops_threshold_clean_data_for_feature_engineering.pickle', 'rb') as f:
-    clean_data_dict_og = pickle.load(f)
-
-# with open("./data/interim/20210729_"+str(no_ops_threshold)+"_no_ops_threshold_feature_engineering_"+str(interval_length)+"_min_2.pickle", 'rb') as f:
-#     feature_dict = pickle.load(f)
-
-# with open("./data/interim/20210729_"+str(no_ops_threshold)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min_2.pickle", 'rb') as f:
-#     time_arr_dict = pickle.load(f)
-
-# with open("./data/interim/20210729_"+str(no_ops_threshold)+"_no_ops_threshold_label_"+str(interval_length)+"_min_2.pickle", 'rb') as f:
-#     labels_dict = pickle.load(f)
-
-with open('data/interim/20210729_merged_container_only_clean_data_for_feature_engineering.pickle', 'rb') as f:
-    clean_data_dict = pickle.load(f)
-
-
-subj = 7
-task = "MPM"
-og_df = pd.DataFrame()
-for df_ in clean_data_dict_og[task][subj]:
-    og_df = pd.concat([og_df, df_])
-
-df_list = clean_data_dict[task][subj]
-df = pd.DataFrame()
-for df_ in df_list:
-    df = pd.concat([df, df_])
-
-onset = 330718
-offset = 696592
-
-title = "Subject 7, with caregiver, gross motor toys, original approach (top), revised approach (bottom)"
-
-draw_comparison(subj, original_df=og_df, new_df=df,
-                title=title, roi_onset=onset, roi_offset=offset)
 
 # %%
 
@@ -226,10 +118,6 @@ print(prev_ranked_dict)
 for s in ranked_dict.keys():
     print(model.states[s].distribution.parameters[0][1].parameters[0].values())
 
-# %%
-a = np.array([[1, 2, 3], ["1", "2", "3"], [4, 2, 1]]).astype('object')
-b = np.where(a == 2, "3", a)
-print(b)
 
 # %%
 feature_set = 'n_new_toy_ratio'
@@ -694,9 +582,6 @@ with open('../data/interim/20210718_babymovement.pickle', 'rb') as f:
 
 
 # %%
-for i in merged_pred_dict_all['MPS'].values():
-    print(len(i))
-# %%
 # rank session by steps
 # print(baby_movement["MPS"])
 total_num_steps_dict = {}
@@ -893,13 +778,3 @@ for state in state_name_dict.values():
             mobile_std[state][toy] = np.std(mobile_dict_for_std[state][toy])
 
             # mobile_std[state][toy] = np.abs(np.sum(np.array(mobile_dict_for_std[state][toy])-mobile_toy_to_pred_dict[key]))/len(mobile_dict_for_std[state][toy])
-# %%
-subj_mobile_dict = (df_.groupby(['pred', 'toys'])['duration'].sum(
-)/df_.groupby(['pred'])['duration'].sum()).to_dict()
-print(subj_mobile_dict)
-
-# %%
-import numpy as np 
-a = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
-print(a)
-print(a[:,[2, 0, 1]])

@@ -163,9 +163,46 @@ value, t_test = stats.ttest_ind(
 print(value, t_test/2)
 
 value, t_test = stats.ttest_ind(
+    experienced_time_in_focus['MPM'], novice_time_in_focus['MPM'])
+print(value, t_test/2)
+
+value, t_test = stats.ttest_ind(
+    experienced_time_in_focus['NMM'], novice_time_in_focus['NMM'])
+print(value, t_test/2)
+
+#%%
+
+value, t_test = stats.ttest_ind(
     experienced_time_in_explore['NMS'], novice_time_in_explore['NMS'])
 print(value, t_test/2)
 
 value, t_test = stats.ttest_ind(
     experienced_time_in_explore['MPS'], novice_time_in_explore['MPS'])
 print(value, t_test/2)
+
+value, t_test = stats.ttest_ind(
+    experienced_time_in_focus['MPS'], novice_time_in_focus['MPS'])
+print(value, t_test/2)
+
+value, t_test = stats.ttest_ind(
+    experienced_time_in_focus['NMS'], novice_time_in_focus['NMS'])
+print(value, t_test/2)
+
+
+#%%
+value, t_test = stats.ttest_ind(
+    novice_time_in_focus['NMM'], novice_time_in_focus['MPM'])
+print(value, t_test/2)
+
+value, t_test = stats.ttest_ind(
+    novice_time_in_focus['NMS'], novice_time_in_focus['MPS'])
+print(value, t_test/2)
+
+value, t_test = stats.ttest_ind(
+    novice_time_in_focus['NMM'] + novice_time_in_focus['MPM'], novice_time_in_focus['NMS'] + novice_time_in_focus['MPS'])
+print(value, t_test/2)
+
+value, t_test = stats.ttest_ind(
+    novice_time_in_focus['NMM'] + novice_time_in_focus['NMS'], novice_time_in_focus['MPS'] + novice_time_in_focus['MPM'])
+print(value, t_test/2)
+

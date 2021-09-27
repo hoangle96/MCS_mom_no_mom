@@ -304,31 +304,38 @@ fig, axs = plt.subplots(nrows=4, ncols=2, figsize=(
     12, 15), sharex=False, sharey=True)
 plt.suptitle(
     "Pct. of each session in each state for each walking exp. group", fontsize=28)
-xlabels_list = ['Novice walkers (< 3 months)', 'Experience walkers (3+ mon.)']
+xlabels_list = ['Novice walkers (< 3 months)', 'Experienced walkers (3+ mon.)']
 for row_idx, task in enumerate(tasks):
     for col_idx, infant_group in enumerate(each_cond_time_novice_exp[task].keys()):
         for state_pos, state_type in enumerate(["0", "F", "E"]):
             if state_type == "E":
                 y = each_cond_time_novice_exp[task][infant_group]["3"] + \
                     each_cond_time_novice_exp[task][infant_group]["4"]
-                color = state_color_dict_shades["4"]
+                color = state_color_dict_shades["3"]
             elif state_type == "F":
                 y = each_cond_time_novice_exp[task][infant_group]["1"] + \
                     each_cond_time_novice_exp[task][infant_group]["2"]
                 color = state_color_dict_shades["1"]
-
             else:
                 y = each_cond_time_novice_exp[task][infant_group]["0"]
                 color = state_color_dict_shades["0"]
 
             # for col_idx, (month_pos, all_pct) in enumerate(each_cond_time_3_mon[task][state].items()):
-            if len(y) == 0:
-                axs[row_idx, col_idx].bar(state_pos, 0)
-            else:
-                axs[row_idx, col_idx].bar(
-                    state_pos, np.mean(y), color=color, alpha=0.8)
-                axs[row_idx, col_idx].errorbar(state_pos, np.mean(y), yerr=(
-                    [0], [np.std(y)]), barsabove=True, color='dimgray')
+            # if len(y) == 0:
+            #     axs[row_idx, col_idx].bar(state_pos, 0)
+            # else:
+                # axs[row_idx, col_idx].bar(
+                # state_pos, np.mean(y), color=color, alpha=0.8)
+                # axs[row_idx, col_idx].errorbar(state_pos, np.mean(y), yerr=(
+                # [0], [np.std(y)]), barsabove=True, color='dimgray')
+            axs[row_idx, col_idx].boxplot(x=y, positions=[state_pos], patch_artist=True,
+                                          boxprops=dict(
+                                              facecolor=color, edgecolor=color),
+                                          capprops=dict(c=color, lw=3),
+                                          whiskerprops=dict(c=color, lw=3),
+                                        flierprops=dict(markerfacecolor=color, markeredgecolor=color),
+                                        medianprops=dict(c="black", lw=3),
+                                        meanprops=dict(c=color,  lw=3))
             axs[row_idx, col_idx].grid(False)
             axs[row_idx, col_idx].set_xticks(list(range(3)))
             axs[row_idx, col_idx].set_xticklabels(["0", "F", "E"], fontsize=26)
@@ -375,10 +382,6 @@ for row_idx, task in enumerate(tasks):
             axs[row_idx, col_idx].set_xlabel(
                 xlabels_list[col_idx], fontsize=26)
             axs[row_idx, col_idx].xaxis.set_label_position('top')
-            # if row_idx == len(tasks):
-            #     axs[row_idx, 0].tick_params("y", left=False, labelleft=False)
-            #     axs[row_idx, -1].tick_params("y", right=True, labelright=True)
-
             if col_idx == 0:
                 axs[row_idx, col_idx].set_ylabel(task, fontsize=26)
                 axs[row_idx, col_idx].set_yticks([0, 0.2, .4, .6, .8])

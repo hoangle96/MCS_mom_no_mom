@@ -68,7 +68,7 @@ for feature_set in ['n_new_toy_ratio']:#, 'fav_toy_till_now', 'n_new_toy_ratio_a
                     # print(np.diff(offset))
                     # print(len(onset) == len(offset))
                     df = pd.DataFrame({"onset":onset, "offset": offset, "pred": pred})
-                    df['pred'] = df['pred'].replace(state_name_dict)
+                    # df['pred'] = df['pred'].replace(state_name_dict)
                     
                     df = df.sort_values(by=['onset'])
                     df.to_csv('./data/result/prediction/20210907/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'/state_'+str(n_states)+'/'+str(subj)+'.csv', index = False)
