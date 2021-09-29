@@ -1,5 +1,5 @@
 # %%
-from scipy.cluster.hierarchy import optimal_leaf_ordering, linkage
+from scipy.cluster.hierarchy import optimal_leaf_ordering, linkage, leaves_list
 from scipy.spatial.kdtree import distance_matrix
 from all_visualization_20210824 import rank_state
 import numpy as np
@@ -8,7 +8,7 @@ from pathlib import Path
 from scipy.stats import entropy
 from numpy.linalg import norm
 import numpy as np
-from variables import tasks
+from variables import tasks, state_color_dict_shades
 from scipy.cluster.hierarchy import dendrogram
 from typing import List
 
@@ -19,6 +19,7 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Patch
 import matplotlib
 import seaborn as sns
+from scipy.spatial.distance import pdist, squareform
 
 
 def DTW(a, b):
@@ -60,11 +61,7 @@ ranked_infant_dict = {
     for k, v in sorted(infant_info["walking_exp"].items(), key=lambda item: item[1])
 }
 
-# ranked_infant_id = {k: v for k, v in sorted(ranked_infant_dict.items(), key=lambda item: item[0])}
-# print(ranked_infant_id)
 
-
-# %%
 interval_length = 1.5
 no_ops_time = 10
 n_states = 5
@@ -77,7 +74,7 @@ with open(
     "../data/result/pickle_files/pred_prob_10s_1.5min_5states_20210907.pickle", "rb"
 ) as f:
     all_prob_dict_all = pickle.load(f)
-# print(len(all_prob_dict_all["MPS"][1]))
+
 subj_list = np.array(list(all_prob_dict_all["MPS"].keys()))
 rank_index = []
 for i in ranked_infant_dict.keys():
@@ -94,16 +91,15 @@ model_file_name = (
     + str(n_states)
     + "_states.pickle"
 )
-model_file_path = Path("../models/hmm/20210907/" + feature_set) / model_file_name
-with open(model_file_path, "rb") as f:
-    model = pickle.load(f)
-state_name_dict = rank_state(model)
+
+
 with open("../data/interim/20210718_babymovement.pickle", "rb") as f:
     baby_movement = pickle.load(f)
 with open("../data/interim/20210818_baby_info.pickle", "rb") as f:
     infant_info = pickle.load(f)
 
 # %%
+# calculating the pairwise similarity between 2 sessions
 all_distance = np.empty((160, 160))
 
 row_idx = 0
@@ -140,56 +136,88 @@ def label_function_all(
     # else:
     # return '[%d %d %1.2f]' % (id, count, R[n-id,3])
 
+#%%
+#%%
+big_list_of_state_seq = []
+step_per_session = []
+step_each_session_per_task = {}
+infant_exp = []
+for task in tasks:
+    step_per_session_this_task = []
+    for infant_id, pred_seq in merged_pred_dict_all[task].items():
+        # state_list = [state_name_dict[i] for i in pred_seq]
+        big_list_of_state_seq.append(pred_seq)
+        movement_df = baby_movement[task][infant_id]
+        step_per_session.append(movement_df["babymovementSteps"].sum())
+        step_per_session_this_task.append(movement_df["babymovementSteps"].sum())
+        infant_exp.append(infant_info["walking_exp"][infant_id])
+    step_each_session_per_task[task] = step_per_session_this_task
 
+max_ = np.amax(np.array(step_per_session))
 # %%
 # dense distance matrix
 dense_matrix = convert_matrix_to_dense(all_distance)
 fig = plt.figure(figsize=(25, 25))
-Z = linkage(dense_matrix, "ward", optimal_ordering=True)
-# print(Z)
+Z = linkage(dense_matrix, "ward", optimal_ordering=True)  # optimal leaf node ordering
 result_dict = dendrogram(Z, leaf_label_func=label_function_all, leaf_rotation=90)
+optimal_list = leaves_list(optimal_leaf_ordering(Z, dense_matrix))
+# print(optimal_list)
 
-label_colors = {"MPS": "red", "MPM": "blue", "NMS": "salmon", "NMM": "green"}
+
+
+#%%
 convert_idx_to_condition = {idx: task for idx, task in enumerate(tasks)}
 
 big_task_list = []
+infant_id_list = []
 # hatch_list = []
 for id in result_dict["leaves"]:
     idx = id // 40
     big_task_list.append(convert_idx_to_condition[idx])
+    infant_id = infant_list[id % 40]
+    condition_name = conditions[id // 40]
+    infant_id_list.append(condition_name + str(infant_id))
     # hatch = "/" if idx % 2 == 1 else "None"
-
+#%%
 ax = plt.gca()
 xlbls = ax.get_xmajorticklabels()
 for lbl in xlbls:
     lbl.set_color(label_colors[lbl.get_text()])
 
 #%%
-big_list_of_state_seq = []
-step_per_session = []
-infant_exp = []
-for task in tasks:
-    for infant_id, pred_seq in merged_pred_dict_all[task].items():
-        state_list = [state_name_dict[i] for i in pred_seq]
-        big_list_of_state_seq.append(state_list)
-        movement_df = baby_movement[task][infant_id]
-        step_per_session.append(movement_df["babymovementSteps"].sum())
-        infant_exp.append(infant_info["walking_exp"][infant_id])
+# plot all condition 
+fig, axs = plt.subplots(nrows=160, ncols=1, figsize=(160, 80))
+for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
+    state_list = big_list_of_state_seq[pred_seq_idx]
+    session_len = len(state_list) if len(state_list) <= 16 else 16
+    for i in range(session_len):
+        axs[ax_id].add_patch(
+            Rectangle(
+                (i, 0),
+                1,
+                5,
+                ec="black",
+                fc=state_color_dict_shades[str(state_list[i])],
+                fill=True,
+                alpha=0.7,
+            )
+        )
 
-max_ = np.amax(np.array(step_per_session))
+    axs[ax_id].set_xticks(np.arange(0, 18, 2))
+    axs[ax_id].set_xticklabels("")
+    axs[ax_id].set_yticklabels("")
+    axs[ax_id].set_xlim(right=16)
+
+
+    axs[ax_id].yaxis.set_label_position("right")
+    axs[-1].set_xticklabels([str(x) for x in np.arange(0, 9, 1)], fontsize=102)
+    axs[-1].set_xlabel("Minutes", fontsize=102)
+
+plt.show()
+plt.close()
+
 #%%
-np.unique(big_task_list, return_counts=True)
-#%%
-state_color_dict_shades = {
-    "0": "grey",
-    "1": "maroon",
-    "2": "salmon",
-    "3": "royalblue",
-    "4": "midnightblue",
-    "5": "midnightblue",
-    "6": "midnightblue",
-    "7": "blue",
-}
+
 condition_colors = {"MPS": "red", "NMS": "orange", "MPM": "blue", "NMM": "green"}
 fig, axs = plt.subplots(nrows=160, ncols=2, figsize=(160, 80))
 
@@ -197,7 +225,7 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
     state_list = big_list_of_state_seq[pred_seq_idx]
     session_len = len(state_list) if len(state_list) <= 16 else 16
     color_list = [
-        state_color_dict_shades[state_list[i]] for i in range(len(state_list))
+        state_color_dict_shades[str(state_list[i])] for i in range(len(state_list))
     ]
     for i in range(session_len):
         # print(state_color_dict_shades[state_list[i]])
@@ -208,29 +236,37 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
                 1,
                 5,
                 ec="black",
-                fc=state_color_dict_shades[state_list[i]],
+                fc=state_color_dict_shades[str(state_list[i])],
                 fill=True,
                 alpha=0.7,
             )
         )
-        if big_task_list[ax_id] == "MPS" or big_task_list[ax_id] == "NMS":
-            axs[ax_id][1].barh(
-                0, step_per_session[ax_id], color=condition_colors[big_task_list[ax_id]]
-            )
-        else:
-            axs[ax_id][1].barh(
-                0,
-                step_per_session[ax_id],
-                color=condition_colors[big_task_list[ax_id]],
-                hatch="/",
-            )
+        # if big_task_list[ax_id] == "MPS" or big_task_list[ax_id] == "NMS":
+    axs[ax_id][1].barh(
+        0, step_per_session[ax_id], color=condition_colors[big_task_list[ax_id]]
+    )
+    # else:
+    #     axs[ax_id][1].barh(
+    #         0,
+    #         step_per_session[ax_id],
+    #         color=condition_colors[big_task_list[ax_id]],
+    #         # hatch="/",
+    #     )
 
     axs[ax_id][0].set_xticks(np.arange(0, 18, 2))
     axs[ax_id][0].set_xticklabels("")
 
     axs[ax_id][0].set_yticklabels("")
     axs[ax_id][0].set_xlim(right=16)
+    # axs[ax_id][0].set_ylabel(
+    #     infant_id_list[ax_id],
+    #     fontsize=50,
+    #     rotation=0,
+    #     color=condition_colors[big_task_list[ax_id]],
+    #     labelpad=80,
+    # )
 
+    axs[ax_id][0].yaxis.set_label_position("right")
     # axs[ax_id][0].yaxis.set_label_position("right")
     axs[ax_id][1].set_xlim(right=max_)
     axs[ax_id][1].set_ylabel("")
@@ -268,7 +304,7 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
     state_list = big_list_of_state_seq[pred_seq_idx]
     session_len = len(state_list) if len(state_list) <= 16 else 16
     color_list = [
-        state_color_dict_shades[state_list[i]] for i in range(len(state_list))
+        state_color_dict_shades[str(state_list[i])] for i in range(len(state_list))
     ]
     for i in range(session_len):
         # print(state_color_dict_shades[state_list[i]])
@@ -279,7 +315,7 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
                 1,
                 5,
                 ec="black",
-                fc=state_color_dict_shades[state_list[i]],
+                fc=state_color_dict_shades[str(state_list[i])],
                 fill=True,
                 alpha=0.7,
             )
@@ -413,75 +449,132 @@ for idx, task in enumerate(tasks):
     plt.savefig(fig_name)
     plt.close()
 
+
+
 #%%
-# for task_idx, task in enumerate(tasks):
-task = "MPS"
-task_idx = 0
-curr = all_distance[
-    task_idx * 40 : (task_idx + 1) * 40, task_idx * 40 : (task_idx + 1) * 40
-].copy()
-dense_matrix_current_condition = convert_matrix_to_dense(curr)
-fig = plt.figure(figsize=(15, 15))
-Z = linkage(dense_matrix_current_condition, "ward", optimal_ordering=True)
-result_dict = dendrogram(Z)
-rearranged_idx = result_dict["leaves"]
-print(rearranged_idx)
-ordered_by_distance_task = curr[np.ix_(rearranged_idx, rearranged_idx)]
-# sns.heatmap(ordered_by_distance_task)
-plt.close()
+# Draw each task with walking experience 
+for task_idx, task in enumerate(tasks):
+    curr = all_distance[
+        task_idx * 40 : (task_idx + 1) * 40, task_idx * 40 : (task_idx + 1) * 40
+    ].copy()
+    dense_matrix_current_condition = convert_matrix_to_dense(curr)
+    fig = plt.figure(figsize=(15, 15))
+    Z = linkage(dense_matrix_current_condition, "ward", optimal_ordering=True)
+    result_dict = dendrogram(Z)
+    rearranged_idx = result_dict["leaves"]
+    ordered_by_distance_task = curr[np.ix_(rearranged_idx, rearranged_idx)]
+    # sns.heatmap(ordered_by_distance_task)
+    plt.close()
 
-# plot against n-step, walking_exp
-fig, axs = plt.subplots(nrows=40, ncols=2, figsize=(160, 80))
-max_walking_exp = np.amax(np.array(infant_exp))
-pred_this_task = list(merged_pred_dict_all[task].values())
-walking_exp = np.array(list(infant_info["walking_exp"].values()))
-arranged_walking_exp = walking_exp[rearranged_idx]
-for id_of_idx, ax_id in enumerate(rearranged_idx):
-    state_list = pred_this_task[ax_id]
-    session_len = len(state_list) if len(state_list) <= 16 else 16
-    color_list = [
-        state_color_dict_shades[str(state_list[i])] for i in range(len(state_list))
-    ]
-    bar_color = "blue" if arranged_walking_exp[id_of_idx] > 90 else "red"
+    # plot against walking_exp
+    fig, axs = plt.subplots(nrows=40, ncols=2, figsize=(160, 80))
+    max_walking_exp = np.amax(np.array(infant_exp))
+    pred_this_task = list(merged_pred_dict_all[task].values())
+    walking_exp = np.array(list(infant_info["walking_exp"].values()))
+    arranged_walking_exp = walking_exp[rearranged_idx]
+    for id_of_idx, ax_id in enumerate(rearranged_idx):
+        state_list = pred_this_task[ax_id]
+        session_len = len(state_list) if len(state_list) <= 16 else 16
+        color_list = [
+            state_color_dict_shades[str(state_list[i])] for i in range(len(state_list))
+        ]
+        bar_color = "blue" if arranged_walking_exp[id_of_idx] > 90 else "red"
 
-    for i in range(session_len):
-        # print(state_color_dict_shades[state_list[i]])
-        # print(i)
-        axs[ax_id][0].add_patch(
-            Rectangle(
-                (i, 0),
-                1,
-                5,
-                ec="black",
-                fc=state_color_dict_shades[str(state_list[i])],
-                fill=True,
-                alpha=0.7,
+        for i in range(session_len):
+            # print(state_color_dict_shades[state_list[i]])
+            # print(i)
+            axs[id_of_idx][0].add_patch(
+                Rectangle(
+                    (i, 0),
+                    1,
+                    5,
+                    ec="black",
+                    fc=state_color_dict_shades[str(state_list[i])],
+                    fill=True,
+                    alpha=0.7,
+                )
             )
-        )
 
-    axs[ax_id][0].set_xticks(np.arange(0, 18, 2))
-    axs[ax_id][0].set_xticklabels("")
+        axs[id_of_idx][0].set_xticks(np.arange(0, 18, 2))
+        axs[id_of_idx][0].set_xticklabels("")
 
-    axs[ax_id][0].set_yticklabels("")
-    axs[ax_id][0].set_xlim(right=16)
-    axs[-1][0].set_xticklabels([str(x) for x in np.arange(0, 9, 1)], fontsize=102)
-    axs[-1][0].set_xlabel("Minutes", fontsize=102)
-    print(walking_exp[ax_id], bar_color)
+        axs[id_of_idx][0].set_yticklabels("")
+        axs[id_of_idx][0].set_xlim(right=16)
+        axs[-1][0].set_xticklabels([str(x) for x in np.arange(0, 9, 1)], fontsize=102)
+        axs[-1][0].set_xlabel("Minutes", fontsize=102)
+        axs[id_of_idx][1].barh(0, width=arranged_walking_exp[id_of_idx], color=bar_color)
 
-    axs[ax_id][1].barh(0, width = arranged_walking_exp[id_of_idx], color=bar_color)
+        axs[id_of_idx][1].set_ylabel("")
+        axs[id_of_idx][1].set_xlabel("")
 
-    axs[ax_id][1].set_ylabel("")
-    axs[ax_id][1].set_xlabel("")
-
-    axs[ax_id][1].set_yticklabels("")
-    axs[ax_id][1].set_xticklabels("")
-    axs[ax_id][1].set_xlim(right=max_walking_exp)
-    axs[-1][1].set_xlabel("Walking experience", fontsize=102)
-plt.show()
-
-plt.clf()
-plt.cla()
-plt.close()
-
+        axs[id_of_idx][1].set_yticklabels("")
+        axs[id_of_idx][1].set_xticklabels("")
+        axs[id_of_idx][1].set_xlim(right=max_walking_exp)
+        axs[-1][1].set_xlabel("Walking experience", fontsize=102)
+    plt.show()
+    plt.clf()
+    plt.cla()
+    plt.close()
 
 #%%
+# Draw each task with n_steps
+for task_idx, task in enumerate(tasks):
+    curr = all_distance[
+        task_idx * 40 : (task_idx + 1) * 40, task_idx * 40 : (task_idx + 1) * 40
+    ].copy()
+    dense_matrix_current_condition = convert_matrix_to_dense(curr)
+    fig = plt.figure(figsize=(15, 15))
+    Z = linkage(dense_matrix_current_condition, "ward", optimal_ordering=True)
+    result_dict = dendrogram(Z)
+    rearranged_idx = result_dict["leaves"]
+    ordered_by_distance_task = curr[np.ix_(rearranged_idx, rearranged_idx)]
+    # sns.heatmap(ordered_by_distance_task)
+    plt.close()
+
+    # plot against walking_exp
+    fig, axs = plt.subplots(nrows=40, ncols=2, figsize=(160, 80))
+    max_n_steps = np.amax(np.array(step_per_session))
+    pred_this_task = list(merged_pred_dict_all[task].values())
+    for id_of_idx, ax_id in enumerate(rearranged_idx):
+        state_list = pred_this_task[ax_id]
+        session_len = len(state_list) if len(state_list) <= 16 else 16
+        color_list = [
+            state_color_dict_shades[str(state_list[i])] for i in range(len(state_list))
+        ]
+        # bar_color = "blue" if arranged_walking_exp[id_of_idx] > 90 else "red"
+
+        for i in range(session_len):
+            # print(state_color_dict_shades[state_list[i]])
+            # print(i)
+            axs[id_of_idx][0].add_patch(
+                Rectangle(
+                    (i, 0),
+                    1,
+                    5,
+                    ec="black",
+                    fc=state_color_dict_shades[str(state_list[i])],
+                    fill=True,
+                    alpha=0.7,
+                )
+            )
+
+        axs[id_of_idx][0].set_xticks(np.arange(0, 18, 2))
+        axs[id_of_idx][0].set_xticklabels("")
+
+        axs[id_of_idx][0].set_yticklabels("")
+        axs[id_of_idx][0].set_xlim(right=16)
+        axs[-1][0].set_xticklabels([str(x) for x in np.arange(0, 9, 1)], fontsize=102)
+        axs[-1][0].set_xlabel("Minutes", fontsize=102)
+        axs[id_of_idx][1].barh(0, width=step_each_session_per_task[task][ax_id])
+
+        axs[id_of_idx][1].set_ylabel("")
+        axs[id_of_idx][1].set_xlabel("")
+
+        axs[id_of_idx][1].set_yticklabels("")
+        axs[id_of_idx][1].set_xticklabels("")
+        axs[id_of_idx][1].set_xlim(right=max_n_steps)
+        axs[-1][1].set_xlabel("Number of steps in session", fontsize=102)
+    plt.show()
+    plt.clf()
+    plt.cla()
+    plt.close()
