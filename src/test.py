@@ -778,3 +778,19 @@ for state in state_name_dict.values():
             mobile_std[state][toy] = np.std(mobile_dict_for_std[state][toy])
 
             # mobile_std[state][toy] = np.abs(np.sum(np.array(mobile_dict_for_std[state][toy])-mobile_toy_to_pred_dict[key]))/len(mobile_dict_for_std[state][toy])
+
+
+#%%
+from scipy.cluster import hierarchy
+
+rng = np.random.default_rng()
+# X = rng.standard_normal((10, 10))
+X = np.array([1,2,3,4])
+print(X)
+#%%
+Z = hierarchy.ward(X)
+hierarchy.leaves_list(Z)
+hierarchy.leaves_list(hierarchy.optimal_leaf_ordering(Z, X))
+
+#%%
+merged_pred_dict_all["MPM"][47]
