@@ -137,7 +137,6 @@ def label_function_all(
     # return '[%d %d %1.2f]' % (id, count, R[n-id,3])
 
 #%%
-#%%
 big_list_of_state_seq = []
 step_per_session = []
 step_each_session_per_task = {}
@@ -170,6 +169,7 @@ convert_idx_to_condition = {idx: task for idx, task in enumerate(tasks)}
 
 big_task_list = []
 infant_id_list = []
+infant_id_number_list = []
 # hatch_list = []
 for id in result_dict["leaves"]:
     idx = id // 40
@@ -177,6 +177,7 @@ for id in result_dict["leaves"]:
     infant_id = infant_list[id % 40]
     condition_name = conditions[id // 40]
     infant_id_list.append(condition_name + str(infant_id))
+    infant_id_number_list.append(str(infant_id))
     # hatch = "/" if idx % 2 == 1 else "None"
 #%%
 ax = plt.gca()
@@ -238,7 +239,7 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
                 ec="black",
                 fc=state_color_dict_shades[str(state_list[i])],
                 fill=True,
-                alpha=0.7,
+                alpha=0.85,
             )
         )
         # if big_task_list[ax_id] == "MPS" or big_task_list[ax_id] == "NMS":
@@ -287,16 +288,16 @@ plt.close()
 
 
 #%%
-state_color_dict_shades = {
-    "0": "grey",
-    "1": "maroon",
-    "2": "salmon",
-    "3": "royalblue",
-    "4": "midnightblue",
-    "5": "midnightblue",
-    "6": "midnightblue",
-    "7": "blue",
-}
+# state_color_dict_shades = {
+#     "0": "grey",
+#     "1": "maroon",
+#     "2": "salmon",
+#     "3": "royalblue",
+#     "4": "midnightblue",
+#     "5": "midnightblue",
+#     "6": "midnightblue",
+#     "7": "blue",
+# }
 fig, axs = plt.subplots(nrows=160, ncols=2, figsize=(160, 80))
 max_walking_exp = np.amax(np.array(infant_exp))
 
@@ -317,9 +318,19 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
                 ec="black",
                 fc=state_color_dict_shades[str(state_list[i])],
                 fill=True,
-                alpha=0.7,
+                alpha=0.85,
             )
         )
+    axs[ax_id][0].set_ylabel(
+        infant_id_number_list[ax_id],
+        fontsize=30,
+        rotation=0,
+        color=condition_colors[big_task_list[ax_id]],
+        labelpad=80,
+        loc="top"
+    )
+    axs[ax_id][0].yaxis.set_label_position("right")
+
     axs[ax_id][0].set_xticks(np.arange(0, 18, 2))
     axs[ax_id][0].set_xticklabels("")
 
@@ -327,8 +338,8 @@ for ax_id, pred_seq_idx in enumerate(result_dict["leaves"]):
     axs[ax_id][0].set_xlim(right=16)
 
     # axs[ax_id][0].yaxis.set_label_position("right")
-    bar_color = "blue" if infant_exp[ax_id] > 90 else "red"
-    axs[ax_id][1].barh(0, infant_exp[ax_id], color=bar_color)
+    bar_color = "blue" if infant_exp[pred_seq_idx] > 90 else "red"
+    axs[ax_id][1].barh(0, infant_exp[pred_seq_idx], color=bar_color)
     axs[ax_id][1].set_xlim(right=max_walking_exp)
     axs[ax_id][1].set_ylabel("")
     axs[ax_id][1].set_xlabel("")
@@ -450,10 +461,25 @@ for idx, task in enumerate(tasks):
     plt.close()
 
 
-
+#%%
+subj_list
 #%%
 # Draw each task with walking experience 
+
 for task_idx, task in enumerate(tasks):
+    fig_name = (
+        "./figures/hmm/20210907/"
+        + feature_set
+        + "/no_ops_threshold_"
+        + str(no_ops_time)
+        + "/window_size_"
+        + str(interval_length)
+        + "/"
+        + str(n_states)
+        + "_states/condensed_timeline_optimal_ordering_"
+        + task
+        + "_with_walking_exp.png"
+    )
     curr = all_distance[
         task_idx * 40 : (task_idx + 1) * 40, task_idx * 40 : (task_idx + 1) * 40
     ].copy()
@@ -491,9 +517,18 @@ for task_idx, task in enumerate(tasks):
                     ec="black",
                     fc=state_color_dict_shades[str(state_list[i])],
                     fill=True,
-                    alpha=0.7,
+                    alpha=0.85,
                 )
             )
+        axs[id_of_idx][0].set_ylabel(
+            subj_list[ax_id],
+            fontsize=80,
+            rotation=0,
+            # color=condition_colors[big_task_list[ax_id]],
+            labelpad=80,
+            loc="top"
+        )
+        axs[id_of_idx][0].yaxis.set_label_position("right")
 
         axs[id_of_idx][0].set_xticks(np.arange(0, 18, 2))
         axs[id_of_idx][0].set_xticklabels("")
@@ -511,7 +546,7 @@ for task_idx, task in enumerate(tasks):
         axs[id_of_idx][1].set_xticklabels("")
         axs[id_of_idx][1].set_xlim(right=max_walking_exp)
         axs[-1][1].set_xlabel("Walking experience", fontsize=102)
-    plt.show()
+    plt.savefig(fig_name)
     plt.clf()
     plt.cla()
     plt.close()
@@ -519,6 +554,19 @@ for task_idx, task in enumerate(tasks):
 #%%
 # Draw each task with n_steps
 for task_idx, task in enumerate(tasks):
+    fig_name = (
+        "../figures/hmm/20210907/"
+        + feature_set
+        + "/no_ops_threshold_"
+        + str(no_ops_time)
+        + "/window_size_"
+        + str(interval_length)
+        + "/"
+        + str(n_states)
+        + "_states/condensed_timeline_optimal_ordering_"
+        + task
+        + "_with_n_steps.png"
+    )
     curr = all_distance[
         task_idx * 40 : (task_idx + 1) * 40, task_idx * 40 : (task_idx + 1) * 40
     ].copy()
@@ -557,6 +605,15 @@ for task_idx, task in enumerate(tasks):
                     alpha=0.7,
                 )
             )
+        axs[id_of_idx][0].set_ylabel(
+            subj_list[ax_id],
+            fontsize=50,
+            rotation=0,
+            # color=condition_colors[big_task_list[ax_id]],
+            labelpad=80,
+            loc="top"
+        )
+        axs[id_of_idx][0].yaxis.set_label_position("right")
 
         axs[id_of_idx][0].set_xticks(np.arange(0, 18, 2))
         axs[id_of_idx][0].set_xticklabels("")
@@ -574,7 +631,8 @@ for task_idx, task in enumerate(tasks):
         axs[id_of_idx][1].set_xticklabels("")
         axs[id_of_idx][1].set_xlim(right=max_n_steps)
         axs[-1][1].set_xlabel("Number of steps in session", fontsize=102)
-    plt.show()
+    plt.savefig(fig_name)
     plt.clf()
     plt.cla()
     plt.close()
+# %%

@@ -62,7 +62,7 @@ condition_name = {"MPS" : "With caregiver, fine motor toys",\
                 "NMM" : "Without caregiver, gross motor toys",\
                 "MPM" : "With caregiver, gross motor toys"
                 }
-state_color_dict = {"0":'grey',  "1":'green', "2":'purple', "3":'darkorange', "4":'darkslateblue',  "5":'crimson', "6":'darkolivegreen', "7":'blue'}
+state_color_dict = {"0":'dimgrey',  "1":'green', "2":'purple', "3":'darkorange', "4":'darkslateblue',  "5":'crimson', "6":'darkolivegreen', "7":'blue'}
 toy_colors_dict = {'bricks': 'blue', 'pig': 'purple', 'popuppals': 'green', 'xylophone': 'red', 'shape_sorter': 'skyblue',
                                     'shape_sorter_blocks': 'salmon', 'broom': 'purple', 'clear_ball': 'teal', 'balls': 'cadetblue',
                                     'food': 'chocolate', 'grocery_cart': 'dodgerblue', 'stroller': 'violet', 'bucket': 'navy', 'no_toy': "slategrey"}

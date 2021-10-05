@@ -336,7 +336,7 @@ def draw_marginal_stationary_distribution(
         # y-axis
         axs[row_idx][col_idx].set_yticks(np.arange(0, 0.9, 0.1))
         axs[row_idx][col_idx].set_yticklabels(
-            [str(int(x * 100)) for x in np.arange(0, 0.9, 0.1)], fontsize=24
+            [str(np.round(x,1)) for x in np.arange(0, 0.9, 0.1)], fontsize=24
         )
         axs[row_idx][col_idx].set_ylim(top=0.45)
         for x_pos in [1.75, 4.25, 6.75, 9.25]:
@@ -348,7 +348,7 @@ def draw_marginal_stationary_distribution(
 
 
 draw_marginal_stationary_distribution(
-    ["NMM", "MPM", "MPS", "NMS"],
+    ["NMM", "MPM", "NMS", "MPS"],
     flatten_pred_dict_pct,
     stationary_distribution,
     n_states,
