@@ -9,7 +9,7 @@ from pathlib import Path
 from all_visualization import rank_state
 
 if __name__ == '__main__':
-    shift = 5
+    shift = .5
 
     for feature_set in ['n_new_toy_ratio', 'fav_toy_till_now', 'n_new_toy_ratio_and_fav_toy_till_now', 'new_toy_play_time_ratio']:
         for no_ops_time in [10, 7]:
@@ -17,7 +17,7 @@ if __name__ == '__main__':
                 task_to_storing_dict = pickle.load(f)
 
             print('no_ops_time', no_ops_time)
-            for interval_length in [2]:
+            for interval_length in [1.5]:
                 print('interval_length', interval_length)
                 shift_time_list = np.arange(0,interval_length, shift)
                 
@@ -50,7 +50,6 @@ if __name__ == '__main__':
                     with open('./data/interim/20210815_30s_offset'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_time_arr_dict_'+str(interval_length)+'_min.pickle', 'rb') as f:
                         time_subj_dict_all = pickle.load(f)
                     
-                  
 
                     model_file_name = "model_20210815_"+feature_set+"_"+str(interval_length)+"_interval_length_"+str(no_ops_time)+"_no_ops_threshold_"+str(n_states)+'_states.pickle'
                     model_file_path = Path('./models/hmm/20210815_30s_offset/'+feature_set)/model_file_name
@@ -75,8 +74,8 @@ if __name__ == '__main__':
                             list_of_time_list = []
                             list_of_prob_list = []
                             for shift_time in np.arange(0, interval_length, shift):
-                                if shift_time in [0.0, 1.0, 2.0]:
-                                    shift_time = int(shift_time) 
+                                if shift_time in shift_time_list:
+                                    # shift_time = int(shift_time) 
                                 path = Path('./figures/hmm/state_distribution_20210815_30s/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'/'+str(n_states)+'_states/all_sequences/'+task+'/')
                                 path.mkdir(parents=True, exist_ok=True)
 

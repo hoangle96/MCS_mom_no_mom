@@ -282,7 +282,7 @@ def shift_signal_toy_count(shift_time, df, floor_time_begin, floor_time_end, int
 
 
 if __name__ == '__main__':
-    CHECK = False
+    CHECK = True
     with open('./data/interim/20210824_floor_time.pickle', 'rb') as f:
         floor_time = pickle.load(f)
     # load data
@@ -296,7 +296,7 @@ if __name__ == '__main__':
             task_to_storing_dict = pickle.load(f)
 
         # print(task_to_storing_dict)
-        for interval_length in [1, 1.5, 2]:
+        for interval_length in [1.5, 1, 2]:
         # for interval_length in [0.5]:
             # interval_length = 2
             # no_ops_threshold = 5/60
@@ -450,26 +450,26 @@ if __name__ == '__main__':
                                 draw_plain_timeline_with_feature_discretization_to_check(
                                     subj, df_, time_arr_list, features=all_features, new_toy_list=new_toy_big_list, gap_size=interval_length, fig_name=fig_name)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_engineering_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(feature_dict, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_engineering_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(feature_dict, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_n_new_toy_ratio_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(feature_dict_with_n_new_toy_ratio, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_n_new_toy_ratio_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(feature_dict_with_n_new_toy_ratio, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_n_new_toy_play_time_ratio_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(feature_dict_with_n_new_toy_play_time_ratio, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_n_new_toy_play_time_ratio_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(feature_dict_with_n_new_toy_play_time_ratio, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_fav_toy_till_now_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(feature_dict_with_fav_toy_till_now, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_fav_toy_till_now_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(feature_dict_with_fav_toy_till_now, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_n_new_toy_ratio_and_fav_toy_till_now_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(feature_dict_with_n_new_toy_ratio_and_fav_toy_till_now, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_n_new_toy_ratio_and_fav_toy_till_now_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(feature_dict_with_n_new_toy_ratio_and_fav_toy_till_now, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_new_toy_play_time_ratio_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(feature_dict_with_new_toy_play_time_ratio, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_dict_with_new_toy_play_time_ratio_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(feature_dict_with_new_toy_play_time_ratio, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(time_arr_dict, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(time_arr_dict, f)
 
-            with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_label_"+str(interval_length)+"_min.pickle", 'wb+') as f:
-                pickle.dump(labels_dict, f)
+            # with open("./data/interim/20210907_"+str(no_ops_threshold)+"_no_ops_threshold_label_"+str(interval_length)+"_min.pickle", 'wb+') as f:
+            #     pickle.dump(labels_dict, f)

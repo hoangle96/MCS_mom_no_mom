@@ -394,31 +394,37 @@ def draw_plain_timeline_with_feature_discretization_to_check(k, df, time_list, f
     time_list = np.array(time_list)/60000 - begin_time
     time = time_list[0] - .25
     # while time < time_list[-1]:
+    x_ticks_list = [0]
     for idx, _ in enumerate(time_list):
         text = "# switches " + str(features[idx, 0])\
                 + "\n# toys " + str(features[idx,1])\
-                + "\n# new toys " + str(features[idx,2])\
-                + "\nn new toys ratio " + str(round(features[idx,3], 2))\
-                + "\nnew toy playtime " + str(round(features[idx,4], 2))\
-                + "\nfav. toy till now " + str(round(features[idx,5], 2))\
-                + "\nglobal fav. toy " + str(round(features[idx,6], 2))\
-                +"\n" +'\n'.join([str(elem) for elem in new_toy_list[idx]])
+                + "\n# new toys ratio " + str(round(features[idx,3], 2))\
+                + "\nfav toy playtime ratio " + str(round(features[idx,5], 1))\
+                # + "\nglobal fav. toy " + str(round(features[idx,6], 2))\
+                # +"\n" +'\n'.join([str(elem) for elem in new_toy_list[idx]])
+                # + "\n# new toys " + str(features[idx,2])\
+                # + "\nnew toy playtime " + str(round(features[idx,4], 2))\
+
+
     
 
         if idx == 0:
             ax.add_patch(Rectangle((time_list[0]-(time_list[1] - time_list[0]), 0), time_list[1] - time_list[0], height, ec = 'black', fill = False))
-            ax.annotate(text, (time_list[0] - gap_size, height + 2), fontsize = 16, color = 'black',  ha = 'left', va = 'center')
+            ax.annotate(text, (time_list[0] - gap_size, height+.75), fontsize = 16, color = 'black',  ha = 'left', va = 'center')
+            x_ticks_list.append(time_list[0]-(time_list[1] - time_list[0]))
 
         elif time_list[idx] - time_list[idx-1] <= gap_size:
             ax.add_patch(Rectangle((time_list[idx-1], 0), gap_size, height, ec = 'black', fill = False))
-            ax.annotate(text, (time_list[idx-1], height + 2), fontsize = 16, color = 'black',  ha = 'left', va = 'center')
+            ax.annotate(text, (time_list[idx-1], height+.75), fontsize = 16, color = 'black',  ha = 'left', va = 'center')
+            x_ticks_list.append(time_list[idx-1])
+    # x_ticks_list.append(time_list[idx])
 
 
-    plt.title('Subject ' + str(k), fontsize = 24)
+    # plt.title('Subject ' + str(k), fontsize = 24)
     plt.xlabel('Minutes', fontsize = 24)
     plt.yticks(list(toy_dict.values()), list(toy_dict.keys()), fontsize = 24)
     plt.grid(False)
-    plt.xticks(fontsize = 24)
+    plt.xticks(x_ticks_list, fontsize = 24)
     plt.ylim(top = height + 2)
     y_labels = [l for l in ax.yaxis.get_ticklabels()]
 
@@ -871,8 +877,8 @@ def draw_timeline_with_prob_to_compare(title, df, list_of_state_list, list_of_ti
                    'shape_sorter_blocks': 'salmon', 'broom': 'purple', 'clear_ball': 'teal', 'balls': 'cadetblue',
                    'food': 'chocolate', 'grocery_cart': 'dodgerblue', 'stroller': 'darkblue', 'bucket': 'navy', 'no_toy': 'slategrey'}
     
-    fig, axs = plt.subplots(nrows = len(list_of_state_list), ncols = 1, figsize = (5*len(list_of_state_list)//4,8*len(list_of_state_list)//2), sharex = True)
-    plt.suptitle(title)
+    fig, axs = plt.subplots(nrows = len(list_of_state_list), ncols = 1, figsize = (5*len(list_of_state_list),8*len(list_of_state_list)//2), sharex = True)
+    # plt.suptitle(title)
     for t in toys:
         onset_list = df.loc[df.loc[:, 'toy'] == t, 'onset'].tolist()
         offset_list = df.loc[df.loc[:, 'toy'] == t, 'offset'].tolist()
@@ -896,30 +902,32 @@ def draw_timeline_with_prob_to_compare(title, df, list_of_state_list, list_of_ti
         if len(time_list) > 1:
             for idx, _ in enumerate(time_list):
                 highest_states = prob_list[idx].argsort()[-2:][::-1]
-                text=str(state_name[highest_states[0]]) +' '+ str(np.round(prob_list[idx][highest_states[0]], 2)) +\
-                    "\n"+ str(state_name[highest_states[1]]) +' '+ str(np.round(prob_list[idx][highest_states[1]], 2)) 
+                # text=str(state_name[highest_states[0]]) +' '+ str(np.round(prob_list[idx][highest_states[0]], 2)) +\
+                #     "\n"+ str(state_name[highest_states[1]]) +' '+ str(np.round(prob_list[idx][highest_states[1]], 2)) 
 
                 if idx == 0:
                     ax.add_patch(Rectangle((time_list[0]-(time_list[1] - time_list[0]), 0), time_list[1] - time_list[0], height,  fc = state_color_dict[state_list[idx]], ec = 'black', fill = True, alpha = .3))
-                    ax.annotate(text, (time_list[0] - gap_size, height + .5), fontsize = font_size, color = 'black',  ha = 'left', va = 'center')
+                    # ax.annotate(text, (time_list[0] - gap_size, height + .5), fontsize = font_size, color = 'black',  ha = 'left', va = 'center')
 
                 elif time_list[idx] - time_list[idx-1] <= gap_size:
                     ax.add_patch(Rectangle((time_list[idx-1], 0), gap_size, height,  fc = state_color_dict[state_list[idx]], ec = 'black', fill = True, alpha = .3))
-                    ax.annotate(text, (time_list[idx-1], height + .5), fontsize = font_size, color = 'black',  ha = 'left', va = 'center')
+                    # ax.annotate(text, (time_list[idx-1], height + .5), fontsize = font_size, color = 'black',  ha = 'left', va = 'center')
         else:
             highest_states = prob_list[0].argsort()[-2:][::-1]
             text=str(state_name[highest_states[0]]) +' '+ str(np.round(prob_list[0][highest_states[0]], 2)) +\
                 "\n"+ str(state_name[highest_states[1]]) +' '+ str(np.round(prob_list[0][highest_states[1]], 2)) 
             ax.add_patch(Rectangle((time_list[0]-gap_size, 0), gap_size, height, fc = state_color_dict[state_list[0]], ec = 'black', fill = True, alpha = .3))
-            ax.annotate(text, (time_list[0] - gap_size, height + .5), fontsize = font_size, color = 'black',  ha = 'left', va = 'center')
+            # ax.annotate(text, (time_list[0] - gap_size, height + .5), fontsize = font_size, color = 'black',  ha = 'left', va = 'center')
+    
+
         
-        # y_labels = [l for l in ax.yaxis.get_ticklabels()]
+        ax.set_yticks(list(toy_dict.values()))
+        ax.set_yticklabels(list(toy_dict.keys()), fontsize = 20)
+        y_labels = [l for l in ax.yaxis.get_ticklabels()]
         # print(y_labels)
         # print(len(toy_dict.keys()))
-        # for i in range(len(y_labels)):
-        #     y_labels[i].set_color(colors_dict[inverse_dict[i]])
-        ax.set_yticks(list(toy_dict.values()))
-        ax.set_yticklabels(list(toy_dict.keys()), fontsize = 12)
+        for i in range(len(y_labels)):
+            y_labels[i].set_color(colors_dict[inverse_dict[i]])
         ax.set_ylim(top = height + 2)
         ax.set_facecolor('white')
         
@@ -928,6 +936,8 @@ def draw_timeline_with_prob_to_compare(title, df, list_of_state_list, list_of_ti
         for state in np.unique(state_list):
             legend_elements.append(Patch(facecolor=state_color_dict[state], edgecolor=state_color_dict[state], label=state, fill = True, alpha = 0.5))
         ax.legend(handles=legend_elements, loc='upper right', fontsize = 16)
+    
+    
     axs[-1].set_xlabel('Minutes', fontsize = 16)
     plt.grid(False)
     plt.xticks(fontsize = 18)

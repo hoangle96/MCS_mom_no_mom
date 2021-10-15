@@ -8,22 +8,22 @@ import glob
 import pandas as pd 
 from visualization import draw_comparison, draw_timeline_with_prob_to_check, draw_toy_state, draw_toy_state_with_std
 from pathlib import Path
-from all_visualization import rank_state
+from all_visualization_20210824 import rank_state
 
 no_ops_time = 10
 n_states = 5
 feature_set = 'n_new_toy_ratio'
 interval_length = 1.5
 shift = .5
-with open('./data/interim/20210815_30s_offset'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_all_prob_'+str(interval_length)+'_min.pickle', 'rb') as f:
+with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_all_prob_'+str(interval_length)+'_min.pickle', 'rb') as f:
     all_proba_dict = pickle.load(f)
 
-with open('./data/interim/20210815_30s_offset'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_'+str(interval_length)+'_min.pickle', 'rb') as f:
+with open('./data/interim/20210907'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold_'+str(n_states)+'_states_prediction_'+str(interval_length)+'_min.pickle', 'rb') as f:
     pred_dict = pickle.load(f)
-with open("./data/interim/20210815_"+str(no_ops_time)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min.pickle", 'rb') as f:
+with open("./data/interim/20210907_"+str(no_ops_time)+"_no_ops_threshold_feature_engineering_time_arr_"+str(interval_length)+"_min.pickle", 'rb') as f:
     time_arr_dict = pickle.load(f)
 
-with open('./data/interim/20210805_'+str(no_ops_time)+'_no_ops_threshold_clean_data_for_feature_engineering.pickle', 'rb') as f:
+with open('./data/interim/20210824_'+str(no_ops_time)+'_no_ops_threshold_clean_data_for_feature_engineering.pickle', 'rb') as f:
     task_to_storing_dict = pickle.load(f)
 from merge import merge_segment_with_state_calculation_all, merge_toy_pred
 merged_pred_dict_all = {}
@@ -67,32 +67,32 @@ for task in tasks:
 
         pred_df = merge_toy_pred(pred_df, subj_df)
         toy_pred_list[task][subj] = pred_df
-with open('./data/interim/20210816_30s_offset_new_merge_'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_'+str(interval_length)+'_min.pickle', 'wb+') as f:
-    pickle.dump(merged_pred_dict_all, f)
-with open('./data/interim/20210816_30s_offset_new_merge_'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_time_arr_dict_'+str(interval_length)+'_min.pickle', 'wb+') as f:
-    pickle.dump(time_subj_dict_all, f)
-model_file_name = "model_20210815_"+feature_set+"_"+str(interval_length)+"_interval_length_"+str(no_ops_time)+"_no_ops_threshold_"+str(n_states)+'_states.pickle'
-model_file_path = Path('./models/hmm/20210815_30s_offset/'+feature_set)/model_file_name
+# with open('./data/interim/20210816_30s_offset_new_merge_'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_merged_prediction_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+    # pickle.dump(merged_pred_dict_all, f)
+# with open('./data/interim/20210816_30s_offset_new_merge_'+feature_set+'_'+str(no_ops_time)+'_no_ops_threshold'+str(n_states)+'_states_time_arr_dict_'+str(interval_length)+'_min.pickle', 'wb+') as f:
+    # pickle.dump(time_subj_dict_all, f)
+model_file_name = "model_20210907_"+feature_set+"_"+str(interval_length)+"_interval_length_"+str(no_ops_time)+"_no_ops_threshold_"+str(n_states)+'_states.pickle'
+model_file_path = Path('./models/hmm/20210907/'+feature_set)/model_file_name
 with open(model_file_path, 'rb') as f:
     model = pickle.load(f)
 state_name_dict = rank_state(model)
 
-# for subj in subj_list:
-#     for task in tasks:
-#         path = Path('./figures/hmm/state_distribution_20210815_30s/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'_new_merge/'+str(n_states)+'_states/merged/'+task+'/')
-#         path.mkdir(parents=True, exist_ok=True)
-#         df = pd.DataFrame()
-#         for df_ in task_to_storing_dict[task][subj]:
-#             df = pd.concat([df, df_])
-#         pred_state_list= merged_pred_dict_all[task][subj]
-#         state_name_list = [state_name_dict[s] for s in pred_state_list]
-#         time_list = time_subj_dict_all[task][subj]
-#         prob_list = all_prob_dict_all[task][subj]
-#         fig_name = './figures/hmm/state_distribution_20210815_30s/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'_new_merge/'+str(n_states)+'_states/merged/'+task+'/'+str(subj)+".png"
-#         draw_timeline_with_prob_to_check(k = str(subj) + "window size: " + str(interval_length) + " no ops threshold "+ str(no_ops_time), \
-#                                         df = df, state_list = state_name_list, time_list = time_list,\
-#                                         state_name = state_name_dict, fig_name= fig_name, gap_size = shift, state_color_dict= state_color_dict,\
-#                                         prob_list = prob_list, shift = shift)
+for subj in subj_list:
+    for task in tasks:
+        path = Path('./figures/hmm/20210907/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'_new_merge/'+str(n_states)+'_states/merged/'+task+'/')
+        path.mkdir(parents=True, exist_ok=True)
+        df = pd.DataFrame()
+        for df_ in task_to_storing_dict[task][subj]:
+            df = pd.concat([df, df_])
+        pred_state_list= merged_pred_dict_all[task][subj]
+        state_name_list = [state_name_dict[s] for s in pred_state_list]
+        time_list = time_subj_dict_all[task][subj]
+        prob_list = all_prob_dict_all[task][subj]
+        fig_name = './figures/hmm/state_distribution_20210815_30s/'+feature_set+'/no_ops_threshold_'+str(no_ops_time)+'/window_size_'+str(interval_length)+'_new_merge/'+str(n_states)+'_states/merged/'+task+'/'+str(subj)+".png"
+        draw_timeline_with_prob_to_check(k = str(subj) + "window size: " + str(interval_length) + " no ops threshold "+ str(no_ops_time), \
+                                        df = df, state_list = state_name_list, time_list = time_list,\
+                                        state_name = state_name_dict, fig_name= fig_name, gap_size = shift, state_color_dict= state_color_dict,\
+                                        prob_list = prob_list, shift = shift)
 
 toy_pred_list = {}
 for task in tasks:

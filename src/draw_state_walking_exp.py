@@ -149,10 +149,7 @@ for task in tasks:
             else:
                 each_cond_time_novice_exp[task]["exp"][state].append(
                     cnt[idx]/cnt.sum())
-# %%
-each_cond_time_novice_exp["MPS"]
-# %%
-# print(all_task_time['1'])
+
 # %%
 # plt.figure(figsize = (10, 8))
 fig, axs = plt.subplots(nrows=1, ncols=len(
@@ -300,11 +297,13 @@ plt.show()
 
 # %%
 # only divide into novice and experienced walkers
+plt.style.use("default")
 fig, axs = plt.subplots(nrows=4, ncols=2, figsize=(
-    12, 15), sharex=False, sharey=True)
-plt.suptitle(
-    "Pct. of each session in each state for each walking exp. group", fontsize=28)
+    15, 15), sharex=False, sharey=True, facecolor='white')
+# plt.suptitle(
+    # "Pct. of each session in each state for each walking exp. group", fontsize=28)
 xlabels_list = ['Novice walkers (< 3 months)', 'Experienced walkers (3+ mon.)']
+
 for row_idx, task in enumerate(tasks):
     for col_idx, infant_group in enumerate(each_cond_time_novice_exp[task].keys()):
         for state_pos, state_type in enumerate(["0", "F", "E"]):
@@ -336,19 +335,27 @@ for row_idx, task in enumerate(tasks):
                                         flierprops=dict(markerfacecolor=color, markeredgecolor=color),
                                         medianprops=dict(c="black", lw=3),
                                         meanprops=dict(c=color,  lw=3))
-            axs[row_idx, col_idx].grid(False)
-            axs[row_idx, col_idx].set_xticks(list(range(3)))
-            axs[row_idx, col_idx].set_xticklabels(["0", "F", "E"], fontsize=26)
-
-            axs[row_idx, col_idx].set_xlabel(
-                xlabels_list[col_idx], fontsize=26)
-            axs[row_idx, col_idx].xaxis.set_label_position('top')
-
+            # axs[row_idx, col_idx].grid(False)
             if col_idx == 0:
                 axs[row_idx, col_idx].set_ylabel(task, fontsize=26)
-                axs[row_idx, col_idx].set_yticks([0, 0.2, .4, .6, .8])
+                axs[row_idx, col_idx].set_yticks([0, 0.2, .4, .6, .8, 1])
                 axs[row_idx, col_idx].set_yticklabels(
-                    [0, 20, 40, 60, 80], fontsize=26)
+                    [0, 20, 40, 60, 80, 100], fontsize=26)
+        axs[row_idx, col_idx].set_xticks(list(range(3)))
+        axs[row_idx, col_idx].set_xticklabels(["0", "F", "E"], fontsize=26)
+        axs[row_idx, col_idx].grid(axis="y", c="black")
+        # axs[row_idx, col_idx].tick_params(axis="x", which="minor", bottom=True)
+        # axs[row_idx, col_idx].grid(axis="x", c="black", which="minor", b=True)
+        axs[row_idx, col_idx].set_facecolor("white")
+            # axs[row_idx, col_idx].xaxis.grid(b = True, which = "minor", color='grey', linestyle='--', linewidth=5, alpha = .3)
+        axs[row_idx, col_idx].set_xlabel(
+            xlabels_list[col_idx], fontsize=26)
+        axs[row_idx, col_idx].xaxis.set_label_position('top')
+        axs[row_idx, col_idx].set_ylim(bottom = 0, top = 1)
+
+        for x_pos in [-.5, .5, 1.5, 2.5]:
+            axs[row_idx, col_idx].axvline(x=x_pos, c="black")
+        
 fig.text(0.5, -0.01, 'States', ha='center', fontsize=26)
 fig.text(-0.01, 0.5, '% time in a session',
          va='center', rotation='vertical', fontsize=26)

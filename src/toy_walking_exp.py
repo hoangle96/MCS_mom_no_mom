@@ -106,47 +106,50 @@ for task in tasks:
                     ].append(0)
 
 # each_cond_time_novice_exp[task][walk_exp_indicator]
-# %%
-print(toy)
-print(len(each_cond_time_novice_exp[walk_exp_indicator][task][state][toy]))
-# len(each_cond_time_novice_exp[task]["novice"])
-# a = np.array(list(infant_info["walking_exp"].values()))
-# print(len(a[a>=90]))
 
 #%%
 def draw_toy_experience(
-    data_dict, toy_list, toy_colors_dict, state_name_dict, name, fig_path, indv
+    data_dict, toy_list, toy_name_dict, toy_colors_dict, state_name_dict, name, fig_path, indv
 ):
+    plt.style.use("default")
     offset = 5
-    if indv:
-        fig = plt.figure(facecolor="white", figsize=((15, 8)))
-    else:
-        fig = plt.figure(facecolor="white", figsize=((15, 15)))
+    # if indv:
+    fig = plt.figure(facecolor="white", figsize=((15, 8)))
+    # else:
+    #     fig = plt.figure(facecolor="white", figsize=((15, 15)))
 
     # for state_loc, state in enumerate(state_name_dict.values()):
+    this_toy_set = []
+    positions = []
     for toy_loc, toy in enumerate(toy_list):
         color = toy_colors_dict[toy]
         plt.boxplot(
             x=data_dict[toy],
-            positions=[toy_loc * 2 + 5],
+            positions=[toy_loc * 4 + 12],
             widths=1,
             patch_artist=True,
-            boxprops=dict(facecolor="none", edgecolor=color),
-            capprops=dict(c=color, lw=3),
-            whiskerprops=dict(c=color, lw=2),
+            boxprops=dict(facecolor="none", edgecolor=color, lw=5),
+            capprops=dict(c=color, lw=5),
+            whiskerprops=dict(c=color, lw=5),
             flierprops=dict(markerfacecolor="none", markeredgecolor=color),
-            medianprops=dict(c=color, lw=3),
+            medianprops=dict(c=color, lw=5),
         )
+        positions.append(toy_loc * 4 + 12)
+        this_toy_set.append(toy_name_dict[toy])
+    print(this_toy_set)
     plt.xlabel("Toys", fontsize=28)
-    plt.xticks([x for x in np.arange(5, len(toys) * 2 + 5, 2)], toy_list, fontsize=24)
+    # numpy.linspace(start, stop, num=50)
+    plt.xticks(positions, this_toy_set, fontsize=26)
     plt.ylim(top=1.1)
+    plt.grid(b = True, axis = 'y', color='black', linestyle='-', linewidth=2)
     plt.yticks(
         np.arange(0, 1.1, 0.1), [str(i) for i in np.arange(0, 110, 10)], fontsize=28
     )
     plt.ylabel("% of total time in session", fontsize=28)
+    plt.ylim(bottom = 0, top = 1)
+
     plt.title(name, fontsize=28)
-    plt.grid(False)
-    if not indv:
+    if indv:
         handles = []
         for toy in toy_list:
             color = toy_colors_dict[toy]
@@ -156,13 +159,16 @@ def draw_toy_experience(
                     [0],
                     marker="o",
                     c=color,
-                    label=toy,
+                    label=toy_name_dict[toy],
                     markerfacecolor=color,
                     markersize=15,
                     fillstyle="full",
                 )
             )
         plt.legend(fontsize=20, loc="upper right", handles=handles)
+    for x_pos in np.arange(10, len(toys) * 4 + 12, 4):
+        plt.axvline(x=x_pos, c="black")
+
     plt.tight_layout()
     plt.savefig(fig_path, facecolor=fig.get_facecolor(), transparent=True)
     plt.close()
@@ -409,6 +415,17 @@ name_conditions = {
     "NMM": "without caregiver, gross-motor toys",
 }
 #%%
+toy_name_dict = {'bricks':'Bricks', 'pig':'Pig', 'popuppals':'Pop-up pals',\
+                'xylophone': "Xylophone",\
+                'shape_sorter': "Shape\nsorter",\
+                'shape_sorter_blocks': 'Shape sorter\nblocks',\
+                'broom':"Broom",\
+                'clear_ball': "Clear Ball",\
+                'balls': "Balls",\
+                'food': "Food",\
+                'grocery_cart': "Grocery Cart",\
+                'stroller':"Stroller",\
+                'bucket': "Bucket"}
 for exp in ["novice", "exp"]:
     for task in tasks:
         data_dict = each_cond_toy_time_walking_exp[exp][task]
@@ -439,6 +456,7 @@ for exp in ["novice", "exp"]:
         draw_toy_experience(
             data_dict,
             toys,
+            toy_name_dict, 
             toy_colors_dict,
             state_name_dict,
             name=name,
@@ -475,6 +493,7 @@ for exp in ["novice", "exp"]:
     draw_toy_experience(
         data_dict,
         toys,
+        toy_name_dict,
         toy_colors_dict,
         state_name_dict,
         name=name,
@@ -512,11 +531,36 @@ for exp in ["novice", "exp"]:
     draw_toy_experience(
         data_dict,
         toys,
+        toy_name_dict,
         toy_colors_dict,
         state_name_dict,
         name=name,
         fig_path=fig_path,
         indv=False,
     )
+# %%
+# Test difference 
+from statsmodels.stats.weightstats import ztest
 
+print("Fine-motor toy")
+for toy in stationary_toys_list:
+    print(toy)
+    print(
+        ztest(
+        each_cond_toy_time_walking_exp["exp"]["MPS"][toy] + each_cond_toy_time_walking_exp["exp"]["NMS"][toy], 
+        each_cond_toy_time_walking_exp["novice"]["MPS"][toy] + each_cond_toy_time_walking_exp["novice"]["NMS"][toy], 
+        alternative="larger",
+        )
+    )
+
+print("\nGross-motor toy")
+for toy in mobile_toys_list:
+    print(toy)
+    print(
+        ztest(
+        each_cond_toy_time_walking_exp["exp"]["MPM"][toy] + each_cond_toy_time_walking_exp["exp"]["NMM"][toy], 
+        each_cond_toy_time_walking_exp["novice"]["MPM"][toy] + each_cond_toy_time_walking_exp["novice"]["NMM"][toy], 
+        alternative="larger",
+        )
+    )
 # %%
