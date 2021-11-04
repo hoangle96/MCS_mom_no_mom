@@ -14,11 +14,11 @@ from typing import List
 
 # import scipy.spatial.distance.jensenshannon as jensenshannon
 from scipy.spatial.distance import jensenshannon
-from fastdtw import fastdtw
+# from fastdtw import fastdtw
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Patch
 import matplotlib
-import seaborn as sns
+# import seaborn as sns
 from scipy.spatial.distance import pdist, squareform
 
 

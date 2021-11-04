@@ -11,7 +11,7 @@ import pandas as pd
 from collections.abc import Hashable
 import pickle
 from variables import toys_dict, tasks, toys_list, mobile_toys_list, toys_of_interest_dict, small_no_ops_threshold_dict, condition_name, state_color_dict
-import cv2
+# import cv2
 from pathlib import Path
 import glob
 import pandas as pd
@@ -537,8 +537,6 @@ for subj in subj_list:
 
 # %%
 # test mini-timeline
-
-
 interval_length = 1.5
 no_ops_time = 10
 n_states = 5
@@ -593,6 +591,7 @@ for task, movement_dict in baby_movement.items():
         each_task_dict.items(), key=lambda item: item[1])}
     total_num_steps_dict[task] = ranked_step_dict
 
+#%%
 all_n_steps = []
 for task in tasks:
     all_n_steps.extend(list(total_num_steps_dict[task].values()))
